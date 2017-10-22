@@ -13,9 +13,42 @@
 </ion-header>
 
 
-<ion-content padding>
-  <form>
+<ion-content fullscreen>
+    <div padding id="cloud-layer">
+        
+           <ion-row>
+             <ion-col>
+               <ion-list inset>
+        
+                 <ion-item>
+                   <ion-label>Username</ion-label>
+                   <ion-input type="text" [(ngModel)]="email"></ion-input>
+                 </ion-item>
+        
+                 <ion-item>
+                   <ion-label>Password</ion-label>
+                   <ion-input type="password" [(ngModel)]="password"></ion-input>
+                 </ion-item>
+        
+               </ion-list>
+             </ion-col>
+           </ion-row>
+        
+           <ion-row>
+             <ion-col>
+               <button ion-button class="login-button" (click)="UserSignIn()">Sign In</button>
+               <button ion-button class="login-button" (click)="UserSignUp()">Sign Up</button>
+               <button ion-button class="login-button" (click)="loginFacebook()">Login With Facebook</button>
+             </ion-col>
+           </ion-row>
+        
+         </div>
+  <!-- <form>
+      <ion-input type="text" name="email" [(ngModel)]="email"></ion-input>
+      <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>
+      <button ion-button (click)="UserSignIn()">Sign In</button>
+      <button ion-button (click)="UserSignUp()">Sign Up</button>
     <button full ion-button (click)="loginFacebook()">Login with Facebook</button>
-  </form>
+  </form> -->
 
 </ion-content>
