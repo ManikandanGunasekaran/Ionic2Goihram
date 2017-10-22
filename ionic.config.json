@@ -2,5 +2,10 @@
   "name": "GoIhram",
   "app_id": "",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {},
+  "proxies": [
+    {
+    "path": "/geturl",
+    "proxyUrl": "https://tracker-rest-service.herokuapp.com/"
+    }]
 }
