@@ -1,19 +1,15 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Track Friends
+      GoIhram Home
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <div id="map"></div>
+<ion-content fullscreen>
+  <ion-list inset>
+    <button ion-item (click)="MoveToTrackPage()"> Track </button> 
+    <button ion-item (click)="MoveToFriendsPage()"> Friends </button> 
+  </ion-list>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <div float-right>
-    <button (click)="calculateAndDisplayRoute()">Find Friends</button>
-    </div>
-  </ion-toolbar>
-</ion-footer>
