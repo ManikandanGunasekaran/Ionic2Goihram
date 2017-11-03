@@ -26,13 +26,15 @@ export class FriendsPage {
     myHeaders.append('Content-type', 'application/json');
     myHeaders.append('Cache-Control', 'no-cache');
     myHeaders.append('Access-Control-Allow-Origin','*');
+    // myHeaders.append('Access-Control-Allow-Credentials','true');
     myHeaders.append('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
     myHeaders.append('Access-Control-Allow-Headers','Origin, Content-Type, X-Auth-Token, X-Request-Token, X-Request-AppId');
     let opt = new RequestOptions({
       headers: myHeaders
     })
 
-    this.http.get('https://tracker-rest-service.herokuapp.com/',opt).map(res => res.json()).subscribe(data => {
+    this.http.get('read/1',opt).map(res => res.json()).subscribe(data => {
+      // this.http.get('/order',opt).map(res => res.json()).subscribe(data => {
      console.log( data);
   });
   }
