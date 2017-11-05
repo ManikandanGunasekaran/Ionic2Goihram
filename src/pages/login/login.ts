@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+import  firebase from 'firebase/app';
+import { Facebook } from '@ionic-native/facebook';
 
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
@@ -25,18 +26,36 @@ export class LoginPage {
     constructor(public navCtrl: NavController,
          public navParams: NavParams,
          public angfire: AngularFireAuth,
-         public loadingCtrl: LoadingController) {}
+         public loadingCtrl: LoadingController,
+         private facebook: Facebook) {}
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad LoginPage');
     }
-
+    
     loginFacebook() {
-        this.angfire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
-            .then((res) => {
-                console.log(res)
-                this.navCtrl.push(HomePage);
+        // if (this.platform.is('cordova')) {
+        this.facebook.login(['email']).then( (response) => {
+            const facebookCredential = firebase.auth.FacebookAuthProvider
+              .credential(response.authResponse.accessToken);
+      
+            firebase.auth().signInWithCredential(facebookCredential)
+              .then((success) => {
+                console.log("Firebase success: " + JSON.stringify(success));
+                // this.userProfile = success;
+              })
+              .catch((error) => {
+                console.log("Firebase failure: " + JSON.stringify(error));
             });
+      
+          }).catch((error) => { console.log(error) });
+      
+        // this.angfire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+        //     .then((res) => {
+        //         console.log(res)
+        //         this.navCtrl.push(HomePage);
+        //     });
+        // }
     }
 
     UserSignUp() {
