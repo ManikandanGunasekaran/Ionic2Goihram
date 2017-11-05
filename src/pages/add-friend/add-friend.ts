@@ -22,6 +22,7 @@ export class AddFriendPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddFriendPage');
+	console.log(""check);
   }
   SendFriendRequest(){
     console.log("send friend Request");
