@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { Facebook } from '@ionic-native/facebook'
+
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -13,6 +15,7 @@ import { LoginPage } from '../pages/login/login';
 import { TrackmapPage } from '../pages/trackmap/trackmap';
 import { FriendsPage } from '../pages/friends/friends';
 import { SignupPage } from '../pages/signup/signup';
+import { AddFriendPage } from '../pages/add-friend/add-friend';
 
 
   // Initialize Firebase
@@ -34,7 +37,8 @@ import { SignupPage } from '../pages/signup/signup';
     LoginPage,
     TrackmapPage,
     FriendsPage,
-    SignupPage
+    SignupPage,
+    AddFriendPage
   ],
   imports: [
     BrowserModule,
@@ -50,11 +54,13 @@ import { SignupPage } from '../pages/signup/signup';
     LoginPage,
     TrackmapPage,
     FriendsPage,
-    SignupPage
+    SignupPage,
+    AddFriendPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Facebook,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
