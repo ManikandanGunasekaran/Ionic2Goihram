@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
+import { IonicPage, Platform, NavController, NavParams, Loading, LoadingController , AlertController} from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import  firebase from 'firebase/app';
 import { Facebook } from '@ionic-native/facebook';
@@ -26,8 +26,12 @@ export class LoginPage {
     constructor(public navCtrl: NavController,
          public navParams: NavParams,
          public angfire: AngularFireAuth,
-         public loadingCtrl: LoadingController,
-         private facebook: Facebook) {}
+         public loadingCtrl: LoadingController
+         ,
+         private facebook: Facebook,
+         private platform: Platform,
+         private alertCtrl: AlertController
+        ) {}
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad LoginPage');
@@ -49,24 +53,40 @@ export class LoginPage {
             });
       
           }).catch((error) => { console.log(error) });
-      
+      //www root code
         // this.angfire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
         //     .then((res) => {
         //         console.log(res)
         //         this.navCtrl.push(HomePage);
         //     });
         // }
+        // else{
+        //     console.log("cordova not supported");
+        // }
     }
 
     UserSignUp() {
         this.navCtrl.push(SignupPage);
     }
-    startLoader(){
-        this.loading = this.loadingCtrl.create();
+    showLoading() {
+        this.loading = this.loadingCtrl.create({
+          content: 'Please wait...',
+          dismissOnPageChange: true
+        });
         this.loading.present();
     }
+    showError(text) {
+        this.loading.dismiss();
+     
+        let alert = this.alertCtrl.create({
+          title: 'Fail',
+          subTitle: text,
+          buttons: ['OK']
+        });
+        // alert.present(prompt);
+    }
     UserSignIn() {
-        this.startLoader();
+        this.showLoading();
         this.angfire.auth.signInWithEmailAndPassword(this.email, this.password)
             .then(auth => {
                 this.loading.dismiss().then( () => {

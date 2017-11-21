@@ -58,5 +58,16 @@ export class FriendsPage {
   AddFriend(){
     this.navCtrl.push(AddFriendPage);
   }
+  public removeItem(item){
+  
+      for(let i = 0; i < this.filteredusers.length; i++) {
+  
+        if(this.filteredusers[i].displayName == item){
+          this.filteredusers.splice(i, 1);
+        }
+  
+      }
+  
+    }
 
 }

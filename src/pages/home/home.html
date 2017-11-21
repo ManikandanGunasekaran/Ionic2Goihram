@@ -1,15 +1,21 @@
 <ion-header>
   <ion-navbar hideBackButton>
-    <ion-title>
-      GoIhram Home
+    <ion-title >
+      Home
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-list inset>
-    <button ion-item (click)="MoveToTrackPage()"> Track </button> 
-    <button ion-item (click)="MoveToFriendsPage()"> Friends </button> 
+  <ion-list inset no-lines>
+    <button ion-item  style="background-color: black; color:white;" (click)="MoveToTrackPage()">
+      <ion-icon style="color:white" padding-right ios="ios-bicycle" md="md-bicycle"></ion-icon> Track </button> 
+    <button ion-item  style="background-color: black; color:white;" (click)="MoveToFriendsPage()">
+      <ion-icon padding-right ios="ios-contacts" md="md-contacts"></ion-icon> Friends </button> 
+    <button ion-item  style="background-color: black; color:white;" ><ion-icon padding-right ios="ios-create" md="md-create">
+      </ion-icon> Review </button> 
+    <button ion-item  style="background-color: black; color:white;"><ion-icon padding-right ios="ios-lock" md="md-lock">
+      </ion-icon> SignOut </button> 
   </ion-list>
 </ion-content>
 

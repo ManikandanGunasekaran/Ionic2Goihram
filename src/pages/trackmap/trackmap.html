@@ -5,8 +5,8 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
-    <ion-title>
+  <ion-navbar  align-title="center">
+    <ion-title text-align="center">
       Track Friends
     </ion-title>
   </ion-navbar>
@@ -14,12 +14,11 @@
 
 <ion-content padding>
   <div id="map"></div>
+  <div padding-top>
+    <ion-buttons end>
+        <button ion-button (click)="calculateAndDisplayRoute()">
+            <ion-icon ios="ios-navigate" md="md-navigate"></ion-icon>Find Friends</button>
+    </ion-buttons>
+  </div>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <div float-right>
-    <button (click)="calculateAndDisplayRoute()">Find Friends</button>
-    </div>
-  </ion-toolbar>
-</ion-footer>
