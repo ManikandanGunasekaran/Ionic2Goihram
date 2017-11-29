@@ -17,23 +17,33 @@
     <ion-row>
         <ion-col>
           <ion-list inset>
-   
+          <form [formGroup]="newUserForm" (submit)="createUser()"> 
+
             <ion-item>
-              <ion-label>Username</ion-label>
-              <ion-input type="text" [(ngModel)]="newUseremail"></ion-input>
+              <ion-label floating>ProfileName</ion-label>
+              <ion-input formControlName="newUserProfileName" type="text"></ion-input>
             </ion-item>
-   
+
             <ion-item>
-              <ion-label>Password</ion-label>
-              <ion-input type="password" [(ngModel)]="newuserpassword"></ion-input>
+              <ion-label floating>Mobile</ion-label>
+              <ion-input type="number" formControlName="newUserMobile"></ion-input>
             </ion-item>
-   
+
+            <ion-item>
+              <ion-label floating>Email</ion-label>
+              <ion-input type="text" formControlName="newUserEmail"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label floating>Password</ion-label>
+              <ion-input type="password" formControlName="newUserPassword"></ion-input>
+            </ion-item>
+
+            <ion-item>
+            <button ion-button type="submit" [disabled]="!newUserForm.valid">Create Account</button>
+            </ion-item>
+          </form>  
           </ion-list>
         </ion-col>
       </ion-row>
-      <ion-row>
-          <ion-col>
-            <button ion-button class="login-button" (click)="createUser()">Create Account</button>
-          </ion-col>
-        </ion-row>
 </ion-content>
