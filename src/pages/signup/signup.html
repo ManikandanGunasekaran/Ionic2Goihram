@@ -16,32 +16,34 @@
 <ion-content padding>
     <ion-row>
         <ion-col>
-          <ion-list inset>
+          <ion-list>
           <form [formGroup]="newUserForm" (submit)="createUser()"> 
 
-            <ion-item>
+            <ion-item class='itemStyle'>
               <ion-label floating>ProfileName</ion-label>
               <ion-input formControlName="newUserProfileName" type="text"></ion-input>
             </ion-item>
 
-            <ion-item>
+            <ion-item class='itemStyle'>
               <ion-label floating>Mobile</ion-label>
               <ion-input type="number" formControlName="newUserMobile"></ion-input>
             </ion-item>
 
-            <ion-item>
+            <ion-item class='itemStyle'>
               <ion-label floating>Email</ion-label>
               <ion-input type="text" formControlName="newUserEmail"></ion-input>
             </ion-item>
 
-            <ion-item>
+            <ion-item class='itemStyle'>
               <ion-label floating>Password</ion-label>
               <ion-input type="password" formControlName="newUserPassword"></ion-input>
             </ion-item>
 
-            <ion-item>
+            <!-- <ion-item class='itemStyle'> -->
+            <div padding>
             <button ion-button type="submit" [disabled]="!newUserForm.valid">Create Account</button>
-            </ion-item>
+          </div>
+            <!-- </ion-item> -->
           </form>  
           </ion-list>
         </ion-col>

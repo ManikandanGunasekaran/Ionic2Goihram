@@ -27820,6 +27820,11 @@ page-add-friend .scroll-content {
   overflow: hidden;
 }
 
+page-add-friend .itemStyle {
+  background-color: #ffbf00;
+  color: white;
+}
+
 page-friends .scroll-content {
   background-color: #ffbf00;
   display: -webkit-box;
@@ -27832,6 +27837,10 @@ page-friends .scroll-content {
   -ms-flex-direction: column;
   flex-direction: column;
   overflow: hidden;
+}
+
+page-home {
+  height: 100%;
 }
 
 page-home .scroll-content {
@@ -27913,6 +27922,11 @@ page-signup .scroll-content {
   -ms-flex-direction: column;
   flex-direction: column;
   overflow: hidden;
+}
+
+page-signup .itemStyle {
+  background-color: #ffbf00;
+  color: white;
 }
 
 page-trackmap #map {

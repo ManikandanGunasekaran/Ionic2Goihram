@@ -13,28 +13,30 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+    <form [formGroup]="addFriendForm" (submit)="SendFriendRequest()"> 
     <ion-row>
         <ion-col>
-          <ion-list inset>
+          <ion-list>
    
-            <ion-item>
-              <ion-label>Name</ion-label>
-              <ion-input type="text" [(ngModel)]="Name"></ion-input>
+            <ion-item class='itemStyle'>
+              <ion-label floating>Name</ion-label>
+              <ion-input type="text" formControlName="name"></ion-input>
             </ion-item>
    
-            <ion-item>
-              <ion-label>Mobile Number</ion-label>
-              <ion-input type="text" [(ngModel)]="mobilenumber"></ion-input>
+            <ion-item class='itemStyle'>
+              <ion-label floating>Mobile Number</ion-label>
+              <ion-input type="text" formControlName="mobilenumber"></ion-input>
             </ion-item>
    
           </ion-list>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
-          <button ion-button class="login-button" (click)="SendFriendRequest()">Send Request</button>
+        <ion-col padding>
+          <button ion-button [disabled]="!addFriendForm.valid" class="login-button">Send Request</button>
         </ion-col>
       </ion-row>
+      </form>
    
 </ion-content>

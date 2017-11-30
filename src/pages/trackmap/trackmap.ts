@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 
-/**
- * Generated class for the TrackmapPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 declare var google:any;
 @IonicPage()
 @Component({
@@ -18,7 +14,7 @@ export class TrackmapPage implements OnInit {
   markers = [];
   startpoint = new google.maps.LatLng(13.038039, 80.21597);
   endpoint = new google.maps.LatLng(13.138039, 80.31597);
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public geolocation: Geolocation) {
   }
 
   ionViewDidLoad() {
@@ -46,12 +42,24 @@ export class TrackmapPage implements OnInit {
     //marker for current location
     public createMapMarker(place:any):void {
     var marker = new google.maps.Marker({
-    map: this.map,
-    position: place
+      map: this.map,
+      position: place,
+      animation: google.maps.Animation.DROP
     });
+    let content ="<h3>Mani</h3><h5>Chennai</h5>";
+    this.addInfoWindow(marker, content);
     this.markers.push(marker);
     }
-  
+    
+    addInfoWindow(marker, content){
+      let infoWindow = new google.maps.InfoWindow({
+        content:content
+      });
+      google.maps.event.addListener(marker, 'click',() => {
+        infoWindow.open(this.map,marker);
+      });
+    }
+
     //getting directions
     public calculateAndDisplayRoute() {
       let directionsService = new google.maps.DirectionsService;

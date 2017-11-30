@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { Geolocation } from '@ionic-native/geolocation';
 import { Facebook } from '@ionic-native/facebook';
 
 
@@ -63,6 +64,7 @@ import { AddFriendPage } from '../pages/add-friend/add-friend';
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
     Facebook,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
