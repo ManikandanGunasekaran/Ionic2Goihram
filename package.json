@@ -29,8 +29,6 @@
     "cordova-android": "~6.3.0",
     "cordova-browser": "~5.0.1",
     "cordova-plugin-device": "^1.1.7",
-    "cordova-plugin-facebook4": "^1.9.1",
-    "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-statusbar": "git+https://github.com/apache/cordova-plugin-statusbar.git",
@@ -56,12 +54,7 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-facebook4": {
-        "APP_ID": "139202366713640",
-        "APP_NAME": "GoIhram"
-      }
+      "cordova-plugin-ionic-webview": {}
     },
     "platforms": [
       "android",

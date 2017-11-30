@@ -10,34 +10,34 @@
 
    </div>
     <div >
-        
+      <form [formGroup]="loginForm" (submit)="UserSignIn()"> 
            <ion-row>
              <ion-col>
                <ion-list inset>
-        
+               
                  <ion-item>
                    <ion-label>Username</ion-label>
-                   <ion-input type="text" [(ngModel)]="email"></ion-input>
+                   <ion-input type="text" formControlName="email"></ion-input>
                  </ion-item>
         
                  <ion-item>
                    <ion-label>Password</ion-label>
-                   <ion-input type="password" [(ngModel)]="password"></ion-input>
+                   <ion-input type="password" formControlName="password"></ion-input>
                  </ion-item>
-        
                </ion-list>
              </ion-col>
            </ion-row>
-        
            <ion-row>
              <ion-col>
-               <button ion-button class="login-button" (click)="UserSignIn()">Sign In</button>
-               <button ion-button class="register-btn" block clear (click)="UserSignUp()">Create New Account</button>
-               <!-- <button ion-button class="login-button" (click)="loginFacebook()">
-                  <ion-icon name="logo-facebook"></ion-icon> - Facebook</button> -->
-                <!-- <button ion-button class="login-button" (click)="UserSignUp()">Sign Up</button> -->
+               <!-- <button ion-button class="login-button" (click)="UserSignIn()">Sign In</button> -->
+               <button ion-button type="submit" class="login-button" [disabled]="!loginForm.valid">Sign In</button>
                </ion-col>
            </ion-row>
-        
+      </form>  
+      <ion-row>
+        <ion-col>
+            <button ion-button class="register-btn" block clear (click)="UserSignUp()">Create New Account</button>
+        </ion-col>
+      </ion-row>
          </div>
 </ion-content>

@@ -9,6 +9,10 @@
     {
       "path": "/read",
       "proxyUrl": "https://tracker-rest-service.herokuapp.com/user-details/read"
+    },
+    {
+      "path": "/register",
+      "proxyUrl": "https://tracker-rest-service.herokuapp.com/user-details/register"
     }
   ]
 }
