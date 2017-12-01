@@ -7,7 +7,7 @@ webpackJsonp([5],{
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddFriendPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(11);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -48,114 +48,15 @@ AddFriendPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-add-friend',template:/*ion-inline-start:"F:\Ionic2GoIhram\Ionic2Goihram\src\pages\add-friend\add-friend.html"*/'<!--\n\n  Generated template for the AddFriendPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Add Friend</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n    <form [formGroup]="addFriendForm" (submit)="SendFriendRequest()"> \n\n    <ion-row>\n\n        <ion-col>\n\n          <ion-list>\n\n   \n\n            <ion-item class=\'itemStyle\'>\n\n              <ion-label floating>Name</ion-label>\n\n              <ion-input type="text" formControlName="name"></ion-input>\n\n            </ion-item>\n\n   \n\n            <ion-item class=\'itemStyle\'>\n\n              <ion-label floating>Mobile Number</ion-label>\n\n              <ion-input type="text" formControlName="mobilenumber"></ion-input>\n\n            </ion-item>\n\n   \n\n          </ion-list>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col padding>\n\n          <button ion-button [disabled]="!addFriendForm.valid" class="login-button">Send Request</button>\n\n        </ion-col>\n\n      </ion-row>\n\n      </form>\n\n   \n\n</ion-content>\n\n'/*ion-inline-end:"F:\Ionic2GoIhram\Ionic2Goihram\src\pages\add-friend\add-friend.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]])
 ], AddFriendPage);
 
-var _a, _b, _c;
 //# sourceMappingURL=add-friend.js.map
 
 /***/ }),
 
 /***/ 107:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TrackmapPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(320);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var TrackmapPage = (function () {
-    function TrackmapPage(navCtrl, navParams, geolocation) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.geolocation = geolocation;
-        this.markers = [];
-        this.startpoint = new google.maps.LatLng(13.038039, 80.21597);
-        this.endpoint = new google.maps.LatLng(13.138039, 80.31597);
-    }
-    TrackmapPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad TrackmapPage');
-    };
-    TrackmapPage.prototype.ngOnInit = function () {
-        this.initMap();
-    };
-    //current location
-    TrackmapPage.prototype.initMap = function () {
-        var divMap = document.getElementById('map');
-        this.map = new google.maps.Map(divMap, {
-            center: this.startpoint,
-            zoom: 15,
-            disableDefaultUI: true,
-            draggable: false,
-            zoomControl: true
-        });
-        this.createMapMarker(this.startpoint);
-    };
-    //marker for current location
-    TrackmapPage.prototype.createMapMarker = function (place) {
-        var marker = new google.maps.Marker({
-            map: this.map,
-            position: place,
-            animation: google.maps.Animation.DROP
-        });
-        var content = "<h3>Mani</h3><h5>Chennai</h5>";
-        this.addInfoWindow(marker, content);
-        this.markers.push(marker);
-    };
-    TrackmapPage.prototype.addInfoWindow = function (marker, content) {
-        var _this = this;
-        var infoWindow = new google.maps.InfoWindow({
-            content: content
-        });
-        google.maps.event.addListener(marker, 'click', function () {
-            infoWindow.open(_this.map, marker);
-        });
-    };
-    //getting directions
-    TrackmapPage.prototype.calculateAndDisplayRoute = function () {
-        var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        directionsDisplay.setMap(this.map);
-        directionsService.route({
-            origin: this.startpoint,
-            destination: this.endpoint,
-            travelMode: google.maps.TravelMode['DRIVING']
-        }, function (res, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                directionsDisplay.setDirections(res);
-            }
-            else {
-                console.warn(status);
-            }
-        });
-    };
-    return TrackmapPage;
-}());
-TrackmapPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-trackmap',template:/*ion-inline-start:"F:\Ionic2GoIhram\Ionic2Goihram\src\pages\trackmap\trackmap.html"*/'<!--\n\n  Generated template for the TrackmapPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar  align-title="center">\n\n    <ion-title text-align="center">\n\n      Track Friends\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <div id="map"></div>\n\n  <div padding-top>\n\n    <ion-buttons end>\n\n        <button ion-button (click)="calculateAndDisplayRoute()">\n\n            <ion-icon ios="ios-navigate" md="md-navigate"></ion-icon>Find Friends</button>\n\n    </ion-buttons>\n\n  </div>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"F:\Ionic2GoIhram\Ionic2Goihram\src\pages\trackmap\trackmap.html"*/,
-    }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _c || Object])
-], TrackmapPage);
-
-var _a, _b, _c;
-//# sourceMappingURL=trackmap.js.map
-
-/***/ }),
-
-/***/ 108:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -245,14 +146,14 @@ FriendsPage = __decorate([
 
 /***/ }),
 
-/***/ 109:
+/***/ 108:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(162);
@@ -355,6 +256,104 @@ SignupPage = __decorate([
 
 /***/ }),
 
+/***/ 109:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TrackmapPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(173);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var TrackmapPage = (function () {
+    function TrackmapPage(navCtrl, navParams, geolocation) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.geolocation = geolocation;
+        this.markers = [];
+        this.startpoint = new google.maps.LatLng(13.038039, 80.21597);
+        this.endpoint = new google.maps.LatLng(13.138039, 80.31597);
+    }
+    TrackmapPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad TrackmapPage');
+    };
+    TrackmapPage.prototype.ngOnInit = function () {
+        this.initMap();
+    };
+    //current location
+    TrackmapPage.prototype.initMap = function () {
+        var divMap = document.getElementById('map');
+        this.map = new google.maps.Map(divMap, {
+            center: this.startpoint,
+            zoom: 15,
+            disableDefaultUI: true,
+            draggable: false,
+            zoomControl: true
+        });
+        this.createMapMarker(this.startpoint);
+    };
+    //marker for current location
+    TrackmapPage.prototype.createMapMarker = function (place) {
+        var marker = new google.maps.Marker({
+            map: this.map,
+            position: place,
+            animation: google.maps.Animation.DROP
+        });
+        var content = "<h3>Mani</h3><h5>Chennai</h5>";
+        this.addInfoWindow(marker, content);
+        this.markers.push(marker);
+    };
+    TrackmapPage.prototype.addInfoWindow = function (marker, content) {
+        var _this = this;
+        var infoWindow = new google.maps.InfoWindow({
+            content: content
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+            infoWindow.open(_this.map, marker);
+        });
+    };
+    //getting directions
+    TrackmapPage.prototype.calculateAndDisplayRoute = function () {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        directionsDisplay.setMap(this.map);
+        directionsService.route({
+            origin: this.startpoint,
+            destination: this.endpoint,
+            travelMode: google.maps.TravelMode['DRIVING']
+        }, function (res, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(res);
+            }
+            else {
+                console.warn(status);
+            }
+        });
+    };
+    return TrackmapPage;
+}());
+TrackmapPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'page-trackmap',template:/*ion-inline-start:"F:\Ionic2GoIhram\Ionic2Goihram\src\pages\trackmap\trackmap.html"*/'<!--\n\n  Generated template for the TrackmapPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar  align-title="center">\n\n    <ion-title text-align="center">\n\n      Track Friends\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <div id="map"></div>\n\n  <div padding-top>\n\n    <ion-buttons end>\n\n        <button ion-button (click)="calculateAndDisplayRoute()">\n\n            <ion-icon ios="ios-navigate" md="md-navigate"></ion-icon>Find Friends</button>\n\n    </ion-buttons>\n\n  </div>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"F:\Ionic2GoIhram\Ionic2Goihram\src\pages\trackmap\trackmap.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */]])
+], TrackmapPage);
+
+//# sourceMappingURL=trackmap.js.map
+
+/***/ }),
+
 /***/ 118:
 /***/ (function(module, exports) {
 
@@ -381,7 +380,7 @@ var map = {
 		4
 	],
 	"../pages/friends/friends.module": [
-		325,
+		324,
 		3
 	],
 	"../pages/login/login.module": [
@@ -389,11 +388,11 @@ var map = {
 		2
 	],
 	"../pages/signup/signup.module": [
-		327,
+		325,
 		1
 	],
 	"../pages/trackmap/trackmap.module": [
-		324,
+		327,
 		0
 	]
 };
@@ -420,8 +419,8 @@ module.exports = webpackAsyncContext;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__trackmap_trackmap__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__friends_friends__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__trackmap_trackmap__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__friends_friends__ = __webpack_require__(107);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -449,7 +448,7 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"F:\Ionic2GoIhram\Ionic2Goihram\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar hideBackButton>\n\n    <ion-title >\n\n      Home\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content fullscreen>\n\n  <ion-list inset no-lines>\n\n    <button ion-item  style="background-color: black; color:white;" (click)="MoveToTrackPage()">\n\n      <ion-icon style="color:white" padding-right ios="ios-bicycle" md="md-bicycle"></ion-icon> Track </button> \n\n    <button ion-item  style="background-color: black; color:white;" (click)="MoveToFriendsPage()">\n\n      <ion-icon padding-right ios="ios-contacts" md="md-contacts"></ion-icon> Friends </button> \n\n    <button ion-item  style="background-color: black; color:white;" (click)="MoveToFriendsPage()">\n\n          <ion-icon padding-right ios="ios-contacts" md="md-contacts"></ion-icon> Profile </button> \n\n    <button ion-item  style="background-color: black; color:white;" ><ion-icon padding-right ios="ios-create" md="md-create">\n\n      </ion-icon> Review </button> \n\n    <button ion-item  style="background-color: black; color:white;"><ion-icon padding-right ios="ios-lock" md="md-lock">\n\n      </ion-icon> SignOut </button> \n\n  </ion-list>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"F:\Ionic2GoIhram\Ionic2Goihram\src\pages\home\home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"F:\Ionic2GoIhram\Ionic2Goihram\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar hideBackButton>\n\n    <ion-title >\n\n      Home\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content fullscreen>\n\n  <ion-list inset no-lines>\n\n    <button ion-item  style="background-color: black; color:white;" (click)="MoveToTrackPage()">\n\n      <ion-icon style="color:white" padding-right ios="ios-bicycle" md="md-bicycle"></ion-icon> Track </button> \n\n    <button ion-item  style="background-color: black; color:white;" (click)="MoveToFriendsPage()">\n\n      <ion-icon padding-right ios="ios-contacts" md="md-contacts"></ion-icon> Friends </button> \n\n    <button ion-item  style="background-color: black; color:white;" (click)="MoveToFriendsPage()">\n\n      <ion-icon style="color:white" padding-right ios="ios-contact" md="md-contact"></ion-icon> Profile </button> \n\n    <button ion-item  style="background-color: black; color:white;" ><ion-icon padding-right ios="ios-create" md="md-create">\n\n      </ion-icon> Review </button> \n\n    <button ion-item  style="background-color: black; color:white;"><ion-icon padding-right ios="ios-lock" md="md-lock">\n\n      </ion-icon> SignOut </button> \n\n  </ion-list>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"F:\Ionic2GoIhram\Ionic2Goihram\src\pages\home\home.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
 ], HomePage);
@@ -458,13 +457,13 @@ HomePage = __decorate([
 
 /***/ }),
 
-/***/ 215:
+/***/ 216:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(234);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -472,28 +471,28 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 233:
+/***/ 234:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(215);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angularfire2_auth__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_geolocation__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_geolocation__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_facebook__ = __webpack_require__(321);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_component__ = __webpack_require__(322);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_home_home__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_login_login__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_trackmap_trackmap__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_friends_friends__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_signup_signup__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_trackmap_trackmap__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_friends_friends__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_signup_signup__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_add_friend_add_friend__ = __webpack_require__(106);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -551,10 +550,10 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */], {}, {
                 links: [
                     { loadChildren: '../pages/add-friend/add-friend.module#AddFriendPageModule', name: 'AddFriendPage', segment: 'add-friend', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/trackmap/trackmap.module#TrackmapPageModule', name: 'TrackmapPage', segment: 'trackmap', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/friends/friends.module#FriendsPageModule', name: 'FriendsPage', segment: 'friends', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] }
+                    { loadChildren: '../pages/trackmap/trackmap.module#TrackmapPageModule', name: 'TrackmapPage', segment: 'trackmap', priority: 'low', defaultHistory: [] }
                 ]
             }),
             __WEBPACK_IMPORTED_MODULE_7_angularfire2__["a" /* AngularFireModule */].initializeApp(config),
@@ -591,8 +590,8 @@ AppModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(214);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login__ = __webpack_require__(54);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -638,9 +637,9 @@ MyApp = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(172);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(108);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -729,5 +728,5 @@ LoginPage = __decorate([
 
 /***/ })
 
-},[215]);
+},[216]);
 //# sourceMappingURL=main.js.map
