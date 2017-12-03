@@ -27839,8 +27839,13 @@ page-friends .scroll-content {
   overflow: hidden;
 }
 
+page-friends .itemStyle {
+  background-color: #ffbf00;
+  color: white;
+}
+
 page-home {
-  height: 100%;
+  height: 80%;
 }
 
 page-home .scroll-content {
@@ -27910,6 +27915,47 @@ page-login .register-btn {
   font-size: 0.8em;
 }
 
+page-profile .scroll-content {
+  background-color: #ffbf00;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+page-profile ion-avatar > img {
+  margin: auto;
+  width: 80px;
+  height: auto;
+}
+
+page-profile ion-label {
+  color: white;
+}
+
+page-profile [floating] {
+  margin-left: 10px;
+}
+
+page-profile [itemStyle] {
+  background-color: #ffbf00;
+  color: white;
+}
+
 page-signup .scroll-content {
   background-color: #ffbf00;
   display: -webkit-box;
@@ -27930,5 +27976,15 @@ page-signup .itemStyle {
 }
 
 page-trackmap #map {
-  height: 90%;
+  height: 85%;
+}
+
+page-trackmap .card-title {
+  font: 20px bold;
+}
+
+page-trackmap [cardTheme] {
+  height: 13%;
+  width: 100%;
+  margin: 0;
 }

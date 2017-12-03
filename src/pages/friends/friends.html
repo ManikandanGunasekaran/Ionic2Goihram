@@ -13,36 +13,79 @@
 </ion-header>
 <ion-content padding>
     <div padding>
-        <ion-buttons end>
-          <button ion-button icon-only (click)="AddFriend()">
-            <ion-icon name="person-add"></ion-icon>
-          </button>
-        </ion-buttons> 
-        <ion-list no-lines>
-            <ion-list>
-              <ion-item-sliding *ngFor="let key of filteredusers">
-                <ion-item style="background-color: black">
-                  <ion-avatar item-left>
-                    <img src="assets/images/defaultProfilePicture.jpg">
-                  </ion-avatar>
-                  <h2 style="color:white">{{key.displayName}}</h2>
-                </ion-item>
-                <ion-item-options>
-                  <button danger (click)="removeItem(key.displayName)">
-                    <ion-icon name="trash"></ion-icon> Delete</button>
-                </ion-item-options>
-              </ion-item-sliding>
-            </ion-list>
-          </ion-list>
-        <!-- <ion-segment [(ngModel)]="Friends">
-            <ion-segment-button value="List Friends">
-                List Friends
+       
+        <ion-segment [(ngModel)]="Friends">
+            <ion-segment-button value="FRIENDS">
+              FRIENDS
               </ion-segment-button>
-          <ion-segment-button value="Add Friends">
-            ADD Friends
+          <ion-segment-button value="PENDING">
+              PENDING 
           </ion-segment-button>
-         
-        </ion-segment> -->
+          <ion-segment-button value="SEND">
+              REQUESTS
+          </ion-segment-button>
+        </ion-segment>
+        
       </div>
+      <div [ngSwitch]="Friends">
+          <ion-list *ngSwitchCase="'FRIENDS'">
+              <ion-item-sliding *ngFor="let key of approvedFriends">
+                  <ion-item style="background-color: black">
+                    <ion-avatar item-left>
+                      <img src="assets/images/defaultProfilePicture.jpg">
+                    </ion-avatar>
+                    <h2 style="color:white">{{key.friendId}}</h2>
+                  </ion-item>
+                  <ion-item-options>
+                    <button danger (click)="DeleteRequest(key.displayName)">
+                      <ion-icon name="trash"></ion-icon> Delete</button>
+                  </ion-item-options>
+                </ion-item-sliding>
+          </ion-list>
+        
+          <ion-list *ngSwitchCase="'PENDING'">
+              <ion-item-sliding *ngFor="let key of pendingFriends">
+                  <ion-item style="background-color: black">
+                    <ion-avatar item-left>
+                      <img src="assets/images/defaultProfilePicture.jpg">
+                    </ion-avatar>
+                    <h2 style="color:white">{{key.friendId}}</h2>
+                  </ion-item>
+                  <ion-item-options>
+                    <button danger (click)="DeleteRequest(key.displayName)">
+                      <ion-icon name="trash"></ion-icon> Reject</button>
+                      <button danger (click)="ApproveRequest(key.friendId);">
+                          <ion-icon name="trash"></ion-icon> Approve</button>
+                  </ion-item-options>
+                </ion-item-sliding>
+          </ion-list>
+
+          <ion-list *ngSwitchCase="'SEND'">
+              <form [formGroup]="addFriendForm" (submit)="SendFriendRequest()"> 
+                  <ion-row>
+                      <ion-col>
+                        <ion-list>
+                 
+                          <ion-item class='itemStyle'>
+                            <ion-label floating>Name</ion-label>
+                            <ion-input type="text" formControlName="name"></ion-input>
+                          </ion-item>
+                 
+                          <ion-item class='itemStyle'>
+                            <ion-label floating>Mobile Number</ion-label>
+                            <ion-input type="text" formControlName="mobilenumber"></ion-input>
+                          </ion-item>
+                 
+                        </ion-list>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col padding>
+                        <button ion-button [disabled]="!addFriendForm.valid" class="login-button">Send Request</button>
+                      </ion-col>
+                    </ion-row>
+                    </form>
+          </ion-list>
+        </div>
 </ion-content>
 

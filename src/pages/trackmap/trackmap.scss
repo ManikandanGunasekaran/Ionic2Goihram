@@ -1,5 +1,13 @@
 page-trackmap {
     #map {
-        height: 90%;
+        height: 85%;
+        }
+        .card-title{
+            font:20px bold;
+        }
+        [cardTheme]{
+            height:13%;
+            width:100%;
+            margin: 0;
         }
 }

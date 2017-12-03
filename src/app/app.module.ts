@@ -8,8 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Facebook } from '@ionic-native/facebook';
-
+import { Diagnostic } from '@ionic-native/diagnostic';
 
 
 import { MyApp } from './app.component';
@@ -19,6 +18,7 @@ import { TrackmapPage } from '../pages/trackmap/trackmap';
 import { FriendsPage } from '../pages/friends/friends';
 import { SignupPage } from '../pages/signup/signup';
 import { AddFriendPage } from '../pages/add-friend/add-friend';
+import { ProfilePage } from '../pages/profile/profile';
 
 
   // Initialize Firebase
@@ -41,7 +41,8 @@ import { AddFriendPage } from '../pages/add-friend/add-friend';
     TrackmapPage,
     FriendsPage,
     SignupPage,
-    AddFriendPage
+    AddFriendPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -59,13 +60,14 @@ import { AddFriendPage } from '../pages/add-friend/add-friend';
     TrackmapPage,
     FriendsPage,
     SignupPage,
-    AddFriendPage
+    AddFriendPage,
+    ProfilePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Geolocation,
-    Facebook,
+    Diagnostic,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

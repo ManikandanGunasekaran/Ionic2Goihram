@@ -2,12 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 
-/**
- * Generated class for the AddFriendPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { FriendsPage } from '../friends/friends';
+
 
 @IonicPage()
 @Component({
@@ -31,5 +27,6 @@ export class AddFriendPage {
   }
   SendFriendRequest(){
     console.log("send friend Request");
+    this.navCtrl.push(FriendsPage);
   }
 }

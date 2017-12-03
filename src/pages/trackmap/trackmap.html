@@ -12,13 +12,28 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <div id="map"></div>
-  <div padding-top>
+<ion-content>
+  <div #map id="map"></div>
+  <ion-card cardTheme>
+      <ion-item>
+              <span *ngIf="!selectedFriend" class="card-title">Select Friend to Track...</span>
+            <span *ngIf="selectedFriend" class="card-title">{{selectedFriend}}</span>
+          
+          <p *ngIf="selectedFriend">11 N. Way St, Madison, WI 53703</p>
+          <button *ngIf="selectedFriend" (click)="calculateAndDisplayRoute()" ion-button icon-right clear item-end>
+              <ion-icon name="navigate"></ion-icon>
+              Start
+            </button>
+            <!-- <ion-avatar item-right>
+                <img src="assets/images/defaultProfilePicture.jpg">
+              </ion-avatar> -->
+        </ion-item>
+  </ion-card>
+  <!-- <div padding-top>
     <ion-buttons end>
         <button ion-button (click)="calculateAndDisplayRoute()">
             <ion-icon ios="ios-navigate" md="md-navigate"></ion-icon>Find Friends</button>
     </ion-buttons>
-  </div>
+  </div> -->
 </ion-content>
 

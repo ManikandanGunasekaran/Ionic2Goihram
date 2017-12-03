@@ -36,13 +36,16 @@ export class SignupPage {
     }
     createUser() {
         //get User Info
+        this.loading = this.loadingCtrl.create();
+        this.loading.present();
+        
         const Email = this.newUserForm.controls.newUserEmail.value;
         const ProfileName = this.newUserForm.controls.newUserProfileName.value;
         const Mobile = this.newUserForm.controls.newUserMobile.value;
         const Password = this.newUserForm.controls.newUserPassword.value;
         this.userInfo = {
             data: {
-                email: Email,
+                emailId: Email,
                 firstName: ProfileName,
                 id: "",
                 lastName: ProfileName,
@@ -56,7 +59,7 @@ export class SignupPage {
         };
 
 
-        this.http.post('/register', this.userInfo)
+        this.http.post('https://tracker-rest-service.herokuapp.com/user-details/register', this.userInfo)
             .subscribe(data => {
                 console.log(data);
                 // firebaseRegistration
@@ -70,16 +73,13 @@ export class SignupPage {
                             console.error(error);
                         });
                     });
-                this.loading = this.loadingCtrl.create();
-                this.loading.present();
+                
             }, error => {
                 console.log(error); // Error getting the data
+                this.loading.dismiss();
             });
-        // this.http.get('/read/'+ Mobile +'').map(res => res.json()).subscribe(data => {
-        //  console.log( data);
-        //  this.navCtrl.push(LoginPage);
-
-        // });
+           
+      
     }
 
 }

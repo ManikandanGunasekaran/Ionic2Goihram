@@ -30,7 +30,9 @@
            <ion-row>
              <ion-col>
                <!-- <button ion-button class="login-button" (click)="UserSignIn()">Sign In</button> -->
-               <button ion-button type="submit" class="login-button" [disabled]="!loginForm.valid">Sign In</button>
+               <!-- <button ion-button type="submit" class="login-button" [disabled]="!loginForm.valid"></button> -->
+               
+    <button ion-button icon-right outline class="login-button" color="light" [disabled]="!loginForm.valid">Sign In <ion-icon name="arrow-forward"></ion-icon></button>
                </ion-col>
            </ion-row>
       </form>  

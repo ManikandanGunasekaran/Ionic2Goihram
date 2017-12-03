@@ -13,6 +13,26 @@
     {
       "path": "/register",
       "proxyUrl": "https://tracker-rest-service.herokuapp.com/user-details/register"
+    },
+    {
+      "path": "/read-by-email",
+      "proxyUrl": "https://tracker-rest-service.herokuapp.com/user-details/read-by-email"
+    },
+    {
+      "path": "/find-friends",
+      "proxyUrl": "https://tracker-rest-service.herokuapp.com/friends/find-friends"
+    },
+    {
+      "path": "/send-friend-request",
+      "proxyUrl": "https://tracker-rest-service.herokuapp.com/friends/send-friend-request"
+    },
+    {
+      "path": "/accept",
+      "proxyUrl": "https://tracker-rest-service.herokuapp.com/friends/accept"
+    },
+    {
+      "path": "/add-location",
+      "proxyUrl": "https://tracker-rest-service.herokuapp.com/locations/add-location"
     }
   ]
 }
