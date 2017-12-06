@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { AddFriendPage } from '../add-friend/add-friend';
+// import { AddFriendPage } from '../add-friend/add-friend';
 
 
 @IonicPage()
@@ -53,12 +53,14 @@ export class FriendsPage {
     // let sendReqUrl ='/find-friends';
     this.http.get(sendReqUrl+'/'+ this.userId).map(res => res.json()).subscribe(data => {
         let FriendList = data.data;
+        this.approvedFriends = [];
+        this.pendingFriends = [];
         for(let friends of FriendList) {
           if(friends.status === 'CONFIRMED'){
-            this.approvedFriends.push({photoURL:"",displayName:friends.id,friendId:friends.friendId});
+            this.approvedFriends.push({photoURL:"",displayName:friends.id,friendId:friends.friendId,status:friends.status});
           }
           else{
-            this.pendingFriends.push({photoURL:"",displayName:friends.id,friendId:friends.friendId});
+            this.pendingFriends.push({photoURL:"",displayName:friends.id,friendId:friends.friendId,status:friends.status});
           }
         }
         this.loading.dismiss();
@@ -72,10 +74,10 @@ export class FriendsPage {
     let acceptReqUrl = 'https://tracker-rest-service.herokuapp.com/friends/accept';
     this.http.post(acceptReqUrl+'/'+ this.userId + '/' + friendId, null).map(res => res.json()).subscribe(data => {
      console.log( data);
-     
-     this.GetAllFriends();
-     this.removeItem(friendId);
      this.loading.dismiss();
+     this.GetAllFriends();
+    //  this.removeItem(friendId);
+    
     });
   }
 
@@ -87,7 +89,7 @@ export class FriendsPage {
      console.log( data);
      
      this.GetAllFriends();
-     this.removeItem(friendId);
+    //  this.removeItem(friendId);
      this.loading.dismiss();
     });
   }

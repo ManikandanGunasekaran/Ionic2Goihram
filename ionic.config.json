@@ -33,6 +33,10 @@
     {
       "path": "/add-location",
       "proxyUrl": "https://tracker-rest-service.herokuapp.com/locations/add-location"
+    },
+    {
+      "path": "/get-friends-location",
+      "proxyUrl": "https://tracker-rest-service.herokuapp.com/locations/get-friends-location"
     }
   ]
 }

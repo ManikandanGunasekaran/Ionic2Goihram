@@ -54,7 +54,7 @@
                   <ion-item-options>
                     <button danger (click)="DeleteRequest(key.displayName)">
                       <ion-icon name="trash"></ion-icon> Reject</button>
-                      <button danger (click)="ApproveRequest(key.friendId);">
+                      <button danger *ngIf="key.status!='WAITING'" (click)="ApproveRequest(key.friendId);">
                           <ion-icon name="trash"></ion-icon> Approve</button>
                   </ion-item-options>
                 </ion-item-sliding>

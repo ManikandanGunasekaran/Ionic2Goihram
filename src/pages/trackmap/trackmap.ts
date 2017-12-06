@@ -15,11 +15,12 @@ export class TrackmapPage implements OnInit {
     map: any;
     markers = [];
     loading: Loading;
-    startpoint: any;
     userId: any;
     selectedFriend : string;
     getCurrentLoc: any;
+    startpoint: any;
     endpoint = new google.maps.LatLng(13.138039, 80.31597);
+    markerposition: any;
     myCurrentLocation = {};
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -29,6 +30,7 @@ export class TrackmapPage implements OnInit {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad TrackmapPage');
+        this.GetMyFriendLocation();
     }
 
     ngOnInit() {
@@ -49,27 +51,45 @@ export class TrackmapPage implements OnInit {
         }
     
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-        this.createMapMarker(this.startpoint);
+        this.createMapMarker(this.startpoint, this.userId);
     }
 
     updateMyLocation(){
-      let mylocation = JSON.stringify(this.myCurrentLocation);
+      let mylocation = {
+          lat:this.getCurrentLoc.lat,
+          lan:this.getCurrentLoc.lan
+      }
     //   let url = '/add-location';
       let url = 'https://tracker-rest-service.herokuapp.com/locations/add-location';
-      this.http.post(url+'/'+ this.userId +'/'+ mylocation +'',null).subscribe(data => {
+      this.http.post(url+'/'+ this.userId, mylocation).subscribe(data => {
         console.log(data);
       });
     }
 
+    GetMyFriendLocation(){
+        this.showLoader();
+        let friendLocUrl ='https://tracker-rest-service.herokuapp.com/locations/get-friends-location';
+        // let friendLocUrl ='/get-friends-location';
+        this.http.get(friendLocUrl+'/'+ this.userId).map(res => res.json()).subscribe(data => {
+            this.loading.dismiss();
+         console.log( data);
+         for(let friendInfo of data.data) {
+            let getFriendLoc = new google.maps.LatLng(friendInfo.location.lat, friendInfo.location.lan);
+            let userName = friendInfo.user.firstName;
+            this.createMapMarker(getFriendLoc, userName);
+          }
+        });
+    }
     //marker for current location
-    public createMapMarker(place: any): void {
+    public createMapMarker(place: any, name: string): void {
         var marker = new google.maps.Marker({
             map: this.map,
             position: place,
             animation: google.maps.Animation.DROP
         });
         google.maps.event.addListener(marker, 'click', () => {
-            this.selectedFriend = 'Mani';
+            this.selectedFriend = name;
+            this.endpoint = place;
             // infoWindow.open(this.map, marker);
            
         });
@@ -110,5 +130,10 @@ export class TrackmapPage implements OnInit {
 
         });
     }
+
+    showLoader(){
+        this.loading = this.loadingCtrl.create();
+        this.loading.present();
+      }
 
 }

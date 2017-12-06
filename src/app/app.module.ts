@@ -17,8 +17,6 @@ import { LoginPage } from '../pages/login/login';
 import { TrackmapPage } from '../pages/trackmap/trackmap';
 import { FriendsPage } from '../pages/friends/friends';
 import { SignupPage } from '../pages/signup/signup';
-import { AddFriendPage } from '../pages/add-friend/add-friend';
-import { ProfilePage } from '../pages/profile/profile';
 
 
   // Initialize Firebase
@@ -40,9 +38,7 @@ import { ProfilePage } from '../pages/profile/profile';
     LoginPage,
     TrackmapPage,
     FriendsPage,
-    SignupPage,
-    AddFriendPage,
-    ProfilePage
+    SignupPage
   ],
   imports: [
     BrowserModule,
@@ -59,9 +55,7 @@ import { ProfilePage } from '../pages/profile/profile';
     LoginPage,
     TrackmapPage,
     FriendsPage,
-    SignupPage,
-    AddFriendPage,
-    ProfilePage
+    SignupPage
   ],
   providers: [
     StatusBar,

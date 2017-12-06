@@ -37,7 +37,7 @@ export class LoginPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad LoginPage');
-        this.checkLocation();
+        // this.checkLocation();
     }
     
     UserSignUp() {
@@ -92,11 +92,11 @@ export class LoginPage {
         this.diagnostic.isLocationEnabled().then(
         (isAvailable) => {
         console.log('Is available? ' + isAvailable);
-        alert('Is available? ' + isAvailable);
+        // alert('Is available? ' + isAvailable);
         // return Diagnostic.switchToLocationSettings();
         }).catch( (e) => {
         console.log(e);
-        alert(JSON.stringify(e));
+        // alert(JSON.stringify(e));
         });
         
         

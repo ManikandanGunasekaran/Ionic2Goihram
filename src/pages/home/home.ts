@@ -5,7 +5,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { TrackmapPage } from '../trackmap/trackmap';
 import { FriendsPage } from '../friends/friends';
-import { ProfilePage } from '../profile/profile';
 
 
 @Component({
@@ -40,9 +39,6 @@ export class HomePage implements OnInit{
   }
   public MoveToFriendsPage(){
       this.navCtrl.push(FriendsPage, {userId: this.userId});
-  }
-  public MoveToProfilePage(){
-    this.navCtrl.push(ProfilePage, {userId: this.userId});
   }
   
 }
