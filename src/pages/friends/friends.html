@@ -14,7 +14,7 @@
 <ion-content padding>
     <div padding>
        
-        <ion-segment [(ngModel)]="Friends">
+        <ion-segment [(ngModel)]="FriendsTab">
             <ion-segment-button value="FRIENDS">
               FRIENDS
               </ion-segment-button>
@@ -27,7 +27,7 @@
         </ion-segment>
         
       </div>
-      <div [ngSwitch]="Friends">
+      <div [ngSwitch]="FriendsTab">
           <ion-list *ngSwitchCase="'FRIENDS'">
               <ion-item-sliding *ngFor="let key of approvedFriends">
                   <ion-item style="background-color: black">

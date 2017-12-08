@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-// import { AddFriendPage } from '../add-friend/add-friend';
 
-
-@IonicPage()
 @Component({
   selector: 'page-friends',
   templateUrl: 'friends.html',
@@ -16,7 +13,7 @@ export class FriendsPage {
   
   filteredusers: any;
   userId: number;
-  Friends: any;
+  FriendsTab: any;
   addFriendForm: any;
   approvedFriends= [];
   pendingFriends= [];
@@ -25,7 +22,7 @@ export class FriendsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController,
       public http: Http,public formBuilder: FormBuilder) {
 
-    this.Friends = 'FRIENDS';
+    this.FriendsTab = 'FRIENDS';
     this.userId = navParams.get('userId'); 
     this.addFriendForm = this.formBuilder.group({
       'name': ['', Validators.required],

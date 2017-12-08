@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Http } from '@angular/http';
@@ -7,7 +7,6 @@ import 'rxjs/add/operator/map';
 
 import { LoginPage } from '../login/login';
 
-@IonicPage()
 @Component({
     selector: 'page-signup',
     templateUrl: 'signup.html',

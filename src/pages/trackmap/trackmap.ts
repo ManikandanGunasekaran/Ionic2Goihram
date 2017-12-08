@@ -1,11 +1,10 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 declare var google: any;
-@IonicPage()
 @Component({
     selector: 'page-trackmap',
     templateUrl: 'trackmap.html',
@@ -59,7 +58,7 @@ export class TrackmapPage implements OnInit {
           lat:this.getCurrentLoc.lat,
           lan:this.getCurrentLoc.lan
       }
-    //   let url = '/add-location';
+      // let url = '/add-location';
       let url = 'https://tracker-rest-service.herokuapp.com/locations/add-location';
       this.http.post(url+'/'+ this.userId, mylocation).subscribe(data => {
         console.log(data);
