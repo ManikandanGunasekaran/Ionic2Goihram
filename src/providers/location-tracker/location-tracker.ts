@@ -9,6 +9,7 @@ export class LocationTrackerProvider {
     public watch: any;
     public lat: number = 0;
     public lan: number = 0;
+    loading: Loading;
     constructor(public geolocation: Geolocation, public loadingCtrl: LoadingController, public zone: NgZone) {
         console.log('Hello LocationTrackerProvider Provider');
     }
@@ -38,7 +39,7 @@ export class LocationTrackerProvider {
             (position: Geoposition) => {
                 this.zone.run(() => {
                     this.lat = position.coords.latitude;
-                    this.lng = position.coords.longitude;
+                    this.lan = position.coords.longitude;
                 });
                 this.loading.dismiss();
             });

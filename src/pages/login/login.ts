@@ -57,22 +57,19 @@ export class LoginPage {
         alert.present();
     }
     UserSignIn() {
-        // this.userEmail = this.loginForm.controls.email.value;
-        // this.showLoading();
-        // this.angfire.auth.signInWithEmailAndPassword(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
-        //     .then(auth => {
-        //         this.navCtrl.push(HomePage, {  userEmail:this.loginForm.controls.email.value
-        //         });
-        //     })
-        //     .catch(err => {
-        //         this.loading.dismiss().then( () => {
-        //             console.log("" + err);
-        //             this.showError();
-        //         });
-        //     });
-        this.navCtrl.push(HomePage, {
-            userEmail: 'manibecse11@gmail.com'
-        });
+        this.userEmail = this.loginForm.controls.email.value;
+        this.showLoading();
+        this.angfire.auth.signInWithEmailAndPassword(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
+            .then(auth => {
+                this.navCtrl.push(HomePage, {  userEmail:this.loginForm.controls.email.value
+                });
+            })
+            .catch(err => {
+                this.loading.dismiss().then( () => {
+                    console.log("" + err);
+                    this.showError();
+                });
+            });
     }
 
     checkLocation() {

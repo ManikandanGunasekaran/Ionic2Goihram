@@ -43,8 +43,8 @@ export class HomePage implements OnInit{
       this.navCtrl.push(FriendsPage, {userId: this.userId});
   }
   public GetUserId(){
-        // let getUserDetail ='https://tracker-rest-service.herokuapp.com/user-details/read-by-email';
-        let getUserDetail = '/read-by-email';
+        let getUserDetail ='https://tracker-rest-service.herokuapp.com/user-details/read-by-email';
+        // let getUserDetail = '/read-by-email';
         this.http.get(getUserDetail+'/'+ this.userEmail +'/').map(res => res.json()).subscribe(data => {
             console.log( data);
             this.userId = data.data.id;
