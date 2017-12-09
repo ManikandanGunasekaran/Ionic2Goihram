@@ -10,13 +10,14 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';
 
-
+import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { TrackmapPage } from '../pages/trackmap/trackmap';
 import { FriendsPage } from '../pages/friends/friends';
 import { SignupPage } from '../pages/signup/signup';
+
 
 
   // Initialize Firebase
@@ -62,7 +63,8 @@ import { SignupPage } from '../pages/signup/signup';
     SplashScreen,
     Geolocation,
     Diagnostic,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    LocationTrackerProvider
   ]
 })
 export class AppModule {}

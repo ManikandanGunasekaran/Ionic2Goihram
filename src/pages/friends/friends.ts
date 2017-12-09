@@ -36,8 +36,8 @@ export class FriendsPage {
     console.log("send friend Request");
     this.showLoader();
     let friendMobilenumber = this.addFriendForm.controls.mobilenumber.value;
-    // let sendReqUrl ='/send-friend-request';
-    let sendReqUrl ='https://tracker-rest-service.herokuapp.com/friends/send-friend-request';
+    let sendReqUrl ='/send-friend-request';
+    // let sendReqUrl ='https://tracker-rest-service.herokuapp.com/friends/send-friend-request';
     this.http.post(sendReqUrl+'/'+ this.userId + '/' + friendMobilenumber, null).map(res => res.json()).subscribe(data => {
      console.log( data);
      this.loading.dismiss();
@@ -46,8 +46,8 @@ export class FriendsPage {
   GetAllFriends(){
    
     this.showLoader();
-    let sendReqUrl ='https://tracker-rest-service.herokuapp.com/friends/find-friends';
-    // let sendReqUrl ='/find-friends';
+    // let sendReqUrl ='https://tracker-rest-service.herokuapp.com/friends/find-friends';
+    let sendReqUrl ='/find-friends';
     this.http.get(sendReqUrl+'/'+ this.userId).map(res => res.json()).subscribe(data => {
         let FriendList = data.data;
         this.approvedFriends = [];
@@ -67,8 +67,8 @@ export class FriendsPage {
   }
   ApproveRequest(friendId){
     this.showLoader();
-    // let acceptReqUrl = '/accept';
-    let acceptReqUrl = 'https://tracker-rest-service.herokuapp.com/friends/accept';
+    let acceptReqUrl = '/accept';
+    // let acceptReqUrl = 'https://tracker-rest-service.herokuapp.com/friends/accept';
     this.http.post(acceptReqUrl+'/'+ this.userId + '/' + friendId, null).map(res => res.json()).subscribe(data => {
      console.log( data);
      this.loading.dismiss();
@@ -80,8 +80,8 @@ export class FriendsPage {
 
   DeleteRequest(friendId){
     this.showLoader();
-    // let acceptReqUrl = '/accept';
-    let acceptReqUrl = 'https://tracker-rest-service.herokuapp.com/friends/accept';
+    let acceptReqUrl = '/accept';
+    // let acceptReqUrl = 'https://tracker-rest-service.herokuapp.com/friends/accept';
     this.http.delete(acceptReqUrl+'/'+ this.userId + '/' + friendId,null).map(res => res.json()).subscribe(data => {
      console.log( data);
      

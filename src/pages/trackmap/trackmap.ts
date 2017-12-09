@@ -58,8 +58,8 @@ export class TrackmapPage implements OnInit {
           lat:this.getCurrentLoc.lat,
           lan:this.getCurrentLoc.lan
       }
-      // let url = '/add-location';
-      let url = 'https://tracker-rest-service.herokuapp.com/locations/add-location';
+      let url = '/add-location';
+      // let url = 'https://tracker-rest-service.herokuapp.com/locations/add-location';
       this.http.post(url+'/'+ this.userId, mylocation).subscribe(data => {
         console.log(data);
       });
@@ -67,8 +67,8 @@ export class TrackmapPage implements OnInit {
 
     GetMyFriendLocation(){
         this.showLoader();
-        let friendLocUrl ='https://tracker-rest-service.herokuapp.com/locations/get-friends-location';
-        // let friendLocUrl ='/get-friends-location';
+        // let friendLocUrl ='https://tracker-rest-service.herokuapp.com/locations/get-friends-location';
+        let friendLocUrl ='/get-friends-location';
         this.http.get(friendLocUrl+'/'+ this.userId).map(res => res.json()).subscribe(data => {
             this.loading.dismiss();
          console.log( data);
