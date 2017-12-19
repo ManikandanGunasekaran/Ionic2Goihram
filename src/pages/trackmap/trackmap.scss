@@ -6,8 +6,17 @@ page-trackmap {
             font:20px bold;
         }
         [cardTheme]{
-            height:14%;
+            height:10%;
             width:100%;
             margin: 0;
+            background-color: #ffbf00;
+        }
+        [iconTheme]{
+            font-size: 30px;
+            color: black;
+            padding: 5px;
+        }
+        [butonstyle]{
+            color: black;
         }
 }

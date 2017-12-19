@@ -7,8 +7,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { MyApp } from './app.component';
@@ -47,7 +49,9 @@ import { SignupPage } from '../pages/signup/signup';
     HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
-    AngularFireAuthModule
+    IonicStorageModule.forRoot(),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -59,6 +63,7 @@ import { SignupPage } from '../pages/signup/signup';
     SignupPage
   ],
   providers: [
+
     StatusBar,
     SplashScreen,
     Geolocation,

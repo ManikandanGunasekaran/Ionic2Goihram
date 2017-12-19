@@ -10,21 +10,30 @@
 
    </div>
     <div >
+      
       <form [formGroup]="loginForm" (submit)="UserSignIn()"> 
            <ion-row>
-             <ion-col>
-               <ion-list inset>
-               
-                 <ion-item>
-                   <ion-label>Username</ion-label>
-                   <ion-input type="text" formControlName="email"></ion-input>
-                 </ion-item>
-         <label>{{LocAvail}}</label>
-                 <ion-item>
-                   <ion-label>Password</ion-label>
-                   <ion-input type="password" formControlName="password"></ion-input>
-                 </ion-item>
-               </ion-list>
+   
+             <ion-col style="padding-left: 30px;display: inherit;">
+                 <button style="background-color: black; color:white;min-width:3.9em;" ion-button item-left icon-only>
+                      <ion-icon name="person"></ion-icon>
+                    </button>
+                    
+                     <ion-input class="inputtext" placeholder="Email Id" type="text" formControlName="email"></ion-input>
+                    </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                   <ion-col style="padding-left: 30px;display: inherit;">  
+                                   
+                    <button style="background-color: black; color:white;min-width:3.9em;" ion-button item-left icon-only>
+                      <ion-icon name="lock"></ion-icon>
+                    </button>
+                   
+                     <ion-input  class="inputtext" placeholder="Password" type="password" formControlName="password"></ion-input>
+                  
+         <!-- <label>{{LocAvail}}</label> -->
+                
              </ion-col>
            </ion-row>
            <ion-row>
@@ -32,13 +41,14 @@
                <!-- <button ion-button class="login-button" (click)="UserSignIn()">Sign In</button> -->
                <!-- <button ion-button type="submit" class="login-button" [disabled]="!loginForm.valid"></button> -->
                
-    <button ion-button icon-right outline class="login-button" color="light" [disabled]="!loginForm.valid">Sign In <ion-icon name="arrow-forward"></ion-icon></button>
+    <button ion-button outline class="login-button" color="light" [disabled]="!loginForm.valid">LOGIN
+    </button>
                </ion-col>
            </ion-row>
       </form>  
       <ion-row>
         <ion-col>
-            <button ion-button class="register-btn" block clear (click)="UserSignUp()">Create New Account</button>
+            <button ion-button class="register-btn" block clear (click)="UserSignUp()">Sign up</button>
         </ion-col>
       </ion-row>
     

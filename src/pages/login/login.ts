@@ -3,8 +3,13 @@ import { NavController, NavParams, Loading, LoadingController , AlertController}
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs/Observable';
 
-import { HomePage } from '../home/home';
+import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
+
+
+// import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
 
 @Component({
@@ -16,13 +21,18 @@ export class LoginPage {
     loginForm: any;
     userEmail: any;
     LocAvail: any;
+    rootPage: any;
+    billList: Observable<any[]>;
     constructor(public navCtrl: NavController,
         public diagnostic: Diagnostic,
         public navParams: NavParams,
         public angfire: AngularFireAuth,
         public loadingCtrl: LoadingController,
         public formBuilder: FormBuilder,
-        private alertCtrl: AlertController
+        private storage: Storage,
+        private alertCtrl: AlertController,
+        private locationTracker:LocationTrackerProvider
+       
     ) {
         this.loginForm = this.formBuilder.group({
             'email': ['', Validators.required],
@@ -33,7 +43,7 @@ export class LoginPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad LoginPage');
         this.LocAvail = '';
-        // this.checkLocation();
+       
     }
 
     UserSignUp() {
@@ -57,19 +67,31 @@ export class LoginPage {
         alert.present();
     }
     UserSignIn() {
+        this.storage.clear();
         this.userEmail = this.loginForm.controls.email.value;
+  
+        this.storage.set('userEmail', this.userEmail);
+        
         this.showLoading();
         this.angfire.auth.signInWithEmailAndPassword(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
             .then(auth => {
-                this.navCtrl.push(HomePage, {  userEmail:this.loginForm.controls.email.value
-                });
+              console.log(auth);
+              // const userId = 9;
+              //   this.locationTracker.getUserDetails(userId).subscribe(data => {
+              //       console.log(data);
+              //       this.storage.set('userDetails', data.data);
+              //       this.loading.dismiss();
+              //   }); 
             })
+            
             .catch(err => {
                 this.loading.dismiss().then( () => {
                     console.log("" + err);
                     this.showError();
                 });
             });
+
+            
     }
 
     checkLocation() {

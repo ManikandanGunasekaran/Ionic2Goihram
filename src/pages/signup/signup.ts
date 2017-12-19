@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import firebase from 'firebase';
 
 import { LoginPage } from '../login/login';
 
@@ -20,6 +21,7 @@ export class SignupPage {
         public angfire: AngularFireAuth,
         public loadingCtrl: LoadingController,
         public formBuilder: FormBuilder,
+        private alertCtrl: AlertController,
         public http: Http) {
         this.newUserForm = this.formBuilder.group({
             'newUserProfileName': ['', Validators.required],
@@ -32,6 +34,15 @@ export class SignupPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad SignupPage');
+    }
+    
+    showError(errorText,titleText) {
+        let alert = this.alertCtrl.create({
+            title: titleText,
+            subTitle: errorText,
+            buttons: ['Ok']
+        });
+        alert.present();
     }
     createUser() {
         //get User Info
@@ -58,6 +69,7 @@ export class SignupPage {
         };
 
 
+        // this.http.post('/register', this.userInfo)
         this.http.post('https://tracker-rest-service.herokuapp.com/user-details/register', this.userInfo)
             .subscribe(data => {
                 console.log(data);
@@ -65,19 +77,22 @@ export class SignupPage {
                 this.angfire.auth.createUserWithEmailAndPassword(Email, Password)
                     .then(() => {
                         this.loading.dismiss().then(() => {
+                            this.showError('User Registered','Success');
                             this.navCtrl.push(LoginPage);
                         });
                     }, (error) => {
                         this.loading.dismiss().then(() => {
                             console.error(error);
+                            this.showError('Service Down','Failed');
                         });
                     });
-                
+                const requestRef = firebase.database().ref('GoIhram');
+                requestRef.push({ EmailId: Email, userId: JSON.parse(data.text())['data'].id});
             }, error => {
                 console.log(error); // Error getting the data
                 this.loading.dismiss();
+                this.showError('Service Down','Failed');
             });
-           
       
     }
 

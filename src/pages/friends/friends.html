@@ -34,10 +34,10 @@
                     <ion-avatar item-left>
                       <img src="assets/images/defaultProfilePicture.jpg">
                     </ion-avatar>
-                    <h2 style="color:white">{{key.friendId}}</h2>
+                    <h2 style="color:white">{{key.displayName}}</h2>
                   </ion-item>
                   <ion-item-options>
-                    <button danger (click)="DeleteRequest(key.displayName)">
+                    <button danger (click)="DeleteRequest(key.friendId)">
                       <ion-icon name="trash"></ion-icon> Delete</button>
                   </ion-item-options>
                 </ion-item-sliding>
@@ -49,10 +49,10 @@
                     <ion-avatar item-left>
                       <img src="assets/images/defaultProfilePicture.jpg">
                     </ion-avatar>
-                    <h2 style="color:white">{{key.friendId}}</h2>
+                    <h2 style="color:white">{{key.displayName}}</h2>
                   </ion-item>
                   <ion-item-options>
-                    <button danger (click)="DeleteRequest(key.displayName)">
+                    <button danger (click)="DeleteRequest(key.friendId)">
                       <ion-icon name="trash"></ion-icon> Reject</button>
                       <button danger *ngIf="key.status!='WAITING'" (click)="ApproveRequest(key.friendId);">
                           <ion-icon name="trash"></ion-icon> Approve</button>

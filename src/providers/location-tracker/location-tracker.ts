@@ -1,21 +1,26 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
-import { Loading, LoadingController } from 'ionic-angular';
+// import { Loading, LoadingController } from 'ionic-angular';
+
 import 'rxjs/add/operator/filter';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class LocationTrackerProvider {
 
     public watch: any;
-    public lat: number = 0;
-    public lan: number = 0;
-    loading: Loading;
-    constructor(public geolocation: Geolocation, public loadingCtrl: LoadingController, public zone: NgZone) {
+    public lat: number = 21.422510;
+    public lan: number = 39.826168;
+    public friends: any;
+    // loading: Loading;
+    constructor(public geolocation: Geolocation, 
+        public http: Http,
+        // public loadingCtrl: LoadingController,
+         public zone: NgZone) {
         console.log('Hello LocationTrackerProvider Provider');
     }
 
     public GetCurrentLocation() {
-    	this.showLoader();
         // this.geolocation.getCurrentPosition().then((position) => {
 
         //          // this.zone.run(() => {
@@ -41,15 +46,15 @@ export class LocationTrackerProvider {
                     this.lat = position.coords.latitude;
                     this.lan = position.coords.longitude;
                 });
-                this.loading.dismiss();
             });
 
     }
 
-    showLoader(){
-        this.loading = this.loadingCtrl.create();
-        this.loading.present();
-  	}	
+    public getUserDetails(userId){
+         // let getUserDetails ='https://tracker-rest-service.herokuapp.com/user-details/read-everything';
+        let getUserDetails ='/read-everything';
+         return  this.http.get(getUserDetails+'/'+userId).map(res => res.json());
+     }
 
 
 }
