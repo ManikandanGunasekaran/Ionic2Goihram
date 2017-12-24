@@ -13,8 +13,13 @@
 </ion-header>
 
 <ion-content>
+  <ion-card>
+        <ion-card-content>
+            <div #directionsPanel></div>
+        </ion-card-content>
+    </ion-card>
   <div #map id="map"></div>
-  <label>{{locationTracker.lat}}</label>
+  <!-- <label>{{locationTracker.lat}}</label> -->
   <span *ngIf="!selectedFriend" class="card-title">Select Friend to Track...</span>
   <span *ngIf="selectedFriend" class="card-title">{{selectedFriend}}</span>
   <div cardTheme>
@@ -28,14 +33,14 @@
       </ion-col>
       <ion-col>
         <button (click)="GetMyFriendLocation()" block clear ion-button butonstyle>
-              <ion-icon iconTheme name="person"></ion-icon>
+              <ion-icon iconTheme name="people"></ion-icon>
               Find Friends
             </button>
       </ion-col>
       <ion-col>
         <button (click)="calculateAndDisplayRoute()" block clear ion-button butonstyle>
-              <ion-icon iconTheme name="navigate"></ion-icon>
-              Track Friends
+              <ion-icon iconTheme name="locate"></ion-icon>
+              Track
             </button>
       </ion-col>
 

@@ -1,12 +1,20 @@
 page-home {
-    height: 80%;
+    height: 100%;
     .scroll-content {
-        background-color: #ffbf00;
+        background-color: white;
         display: flex;
         flex-direction: column;
         overflow: hidden;
       }
-      ion-title{
+      [ion-item]{
         text-align:center;
+        font-weight: bold;
+      }
+      
+       #cloud-layer {
+        background-image: url(../assets/images/banner.jpg);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        height: 42%;
       }
     }

@@ -51,8 +51,8 @@ export class LocationTrackerProvider {
     }
 
     public getUserDetails(userId){
-         // let getUserDetails ='https://tracker-rest-service.herokuapp.com/user-details/read-everything';
-        let getUserDetails ='/read-everything';
+         let getUserDetails ='https://tracker-rest-service.herokuapp.com/user-details/read-everything';
+        // let getUserDetails ='/read-everything';
          return  this.http.get(getUserDetails+'/'+userId).map(res => res.json());
      }
 

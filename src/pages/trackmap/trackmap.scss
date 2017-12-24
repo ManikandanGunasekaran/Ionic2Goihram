@@ -1,6 +1,8 @@
 page-trackmap {
     #map {
-        height: 85%;
+        display: block;
+    height: 87%;
+    width: 100%;
         }
         .card-title{
             font:20px bold;
@@ -18,5 +20,12 @@ page-trackmap {
         }
         [butonstyle]{
             color: black;
+            font-size: 70%;
+        }
+        ion-card {
+            max-height: 200px;
+            overflow: scroll;
+            position: absolute;
+            z-index: 1;
         }
 }

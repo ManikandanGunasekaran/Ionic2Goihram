@@ -15,6 +15,7 @@ declare var google: any;
 })
 export class TrackmapPage implements OnInit {
     @ViewChild('map') mapElement: ElementRef;
+    @ViewChild('directionsPanel') directionsPanel: ElementRef;
     map: any;
     markers = [];
     loading: Loading;
@@ -28,6 +29,7 @@ export class TrackmapPage implements OnInit {
     myCurrentLocation = {};
     userDetails: any;
     FriendsPage = FriendsPage;
+    enableDirection = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
       public loadingCtrl: LoadingController,
@@ -80,6 +82,8 @@ export class TrackmapPage implements OnInit {
     }
 
     updateMyLocation(){
+      this.enableDirection = false;
+      this.selectedFriend = '';
       let mylocation = {
           lat:this.locationTracker.lat,
           lan:this.locationTracker.lan
@@ -92,6 +96,8 @@ export class TrackmapPage implements OnInit {
     }
 
     GetMyFriendLocation(){
+        this.enableDirection = false;
+        this.selectedFriend = '';
         // this.showLoader();
         // // let friendLocUrl ='https://tracker-rest-service.herokuapp.com/locations/get-friends-location';
         // let friendLocUrl ='/get-friends-location';
@@ -111,7 +117,7 @@ export class TrackmapPage implements OnInit {
             this.createMapMarker(getFriendLoc, userName);
           }
         // },onerror =>{ 
-        //     this.loading.dismiss();
+        //     // this.loading.dismiss();
         // });
     }
     //marker for current location
@@ -145,10 +151,12 @@ export class TrackmapPage implements OnInit {
 
     //getting directions
     public calculateAndDisplayRoute() {
+        this.enableDirection = true;
         let directionsService = new google.maps.DirectionsService;
         let directionsDisplay = new google.maps.DirectionsRenderer;
 
         directionsDisplay.setMap(this.map);
+        directionsDisplay.setPanel(this.directionsPanel.nativeElement);
 
         directionsService.route({
             origin: this.startpoint,

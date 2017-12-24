@@ -11,6 +11,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { IonicStorageModule } from '@ionic/storage';
+import { enableProdMode } from '@angular/core';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { MyApp } from './app.component';
@@ -32,7 +34,7 @@ import { SignupPage } from '../pages/signup/signup';
     messagingSenderId: "1016164384053"
   };
   
-  
+  enableProdMode();
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { SignupPage } from '../pages/signup/signup';
     AngularFireAuthModule,
     AngularFireDatabaseModule
   ],
+
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -67,6 +70,7 @@ import { SignupPage } from '../pages/signup/signup';
     StatusBar,
     SplashScreen,
     Geolocation,
+    GoogleMaps,
     Diagnostic,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     LocationTrackerProvider

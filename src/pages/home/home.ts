@@ -49,7 +49,7 @@ export class HomePage implements OnInit{
                    console.log(data[val]);
                    this.userId  = data[val].userId;
                    this.getUserDetails();
-                    this.loading.dismiss();
+                   // this.loading.dismiss();
                 }
              }
 
@@ -87,7 +87,9 @@ export class HomePage implements OnInit{
             console.log(data);
             this.storage.set('userDetails', data.data);
             this.loading.dismiss();
-        }); 
+        },onerror =>{ 
+          this.loading.dismiss();
+        });
   }
 
   public signout(){

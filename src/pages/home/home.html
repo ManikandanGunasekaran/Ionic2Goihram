@@ -1,19 +1,32 @@
 
 <ion-content fullscreen>
+   <div  padding id="cloud-layer">
+
+   </div>
+   <div style="text-align: center;">
+    Welcome to
+    <h1 style="font-weight: bold;">GO IHRAM</h1>
+   </div>
   <ion-list inset no-lines>
-    <button ion-item  style="background-color: black; color:white;" (click)="MoveToTrackPage()">
-      <ion-icon style="color:white" padding-right ios="ios-bicycle" md="md-bicycle"></ion-icon> Track </button> 
-    <button ion-item  style="background-color: black; color:white;" (click)="MoveToFriendsPage()">
-      <ion-icon padding-right ios="ios-contacts" md="md-contacts"></ion-icon> Friends </button> 
-    <!-- <button ion-item  style="background-color: black; color:white;" (click)="MoveToProfilePage()">
-      <ion-icon style="color:white" padding-right ios="ios-contact" md="md-contact"></ion-icon> Profile </button>  -->
-    <button ion-item  style="background-color: black; color:white;" >
-      <ion-icon padding-right ios="ios-create" md="md-create">
-      </ion-icon> Review </button> 
-    <button (click)="signout()"ion-item  style="background-color: black; color:white;">
-      <ion-icon padding-right ios="ios-lock" md="md-lock">
-      </ion-icon> SignOut </button> 
+    <button ion-item  style="background-color: #ffbf00; margin:2px;text-align: center;" 
+    (click)="MoveToTrackPage()">
+      <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon> Track </button> 
+    <button ion-item  style="background-color: #ffbf00; margin:2px;text-align: center;" 
+    (click)="MoveToFriendsPage()">
+      <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon> Friends </button> 
+   
+    <button ion-item  style="background-color: #ffbf00;margin:2px;text-align: center;" >
+      <ion-icon ios="ios-create" md="md-create"> </ion-icon> Review </button> 
+    <button ion-item (click)="signout()" style="background-color: #ffbf00;margin:2px;text-align: center;">
+      <ion-icon ios="ios-lock" md="md-lock">  </ion-icon> SignOut </button> 
   </ion-list>
+
+  <ion-item style="bottom:0;background-color: #ffbf00;">
+
+  </ion-item>
  
 </ion-content>
+
+ <!-- <button ion-item  style="background-color: black; color:white;" (click)="MoveToProfilePage()">
+      <ion-icon style="color:white" padding-right ios="ios-contact" md="md-contact"></ion-icon> Profile </button>  -->
 
