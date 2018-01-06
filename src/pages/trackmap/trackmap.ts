@@ -21,6 +21,9 @@ export class TrackmapPage implements OnInit {
     loading: Loading;
     userId: any;
     selectedFriend : string;
+    trackCase = false;
+    friendCase = false;
+    friendCount = 0;
     getCurrentLoc: any;
     startpoint: any;
     endpoint = new google.maps.LatLng(13.138039, 80.31597);
@@ -52,9 +55,11 @@ export class TrackmapPage implements OnInit {
 
     ngOnInit() {
         this.selectedFriend = '';
+        this.trackCase = false;
+        this.friendCase = false;
         this.userId = this.navParams.get('userId'); 
         // this.getCurrentLoc = this.navParams.get('currentLoc'); 
-        // this.locationTracker.GetCurrentLocation();
+        this.locationTracker.GetCurrentLocation();
         this.initMap();
     //     this.task = setInterval(function(){
     //     this.markers[0].
@@ -67,10 +72,10 @@ export class TrackmapPage implements OnInit {
        
         let mapOptions = {};
         this.startpoint = new google.maps.LatLng(this.locationTracker.lat, this.locationTracker.lan);
-        // this.updateMyLocation();
+        this.updateMyLocation();
         mapOptions = {
         center: this.startpoint,
-        zoom: 15,
+        zoom: 12,
         zoomControl: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP
         }
@@ -84,6 +89,8 @@ export class TrackmapPage implements OnInit {
     updateMyLocation(){
       this.enableDirection = false;
       this.selectedFriend = '';
+      this.trackCase = false;
+      this.friendCase = false;
       let mylocation = {
           lat:this.locationTracker.lat,
           lan:this.locationTracker.lan
@@ -97,6 +104,8 @@ export class TrackmapPage implements OnInit {
 
     GetMyFriendLocation(){
         this.enableDirection = false;
+        this.trackCase = false;
+        this.friendCase = true;
         this.selectedFriend = '';
         // this.showLoader();
         // // let friendLocUrl ='https://tracker-rest-service.herokuapp.com/locations/get-friends-location';
@@ -104,6 +113,7 @@ export class TrackmapPage implements OnInit {
         // this.http.get(friendLocUrl+'/'+ this.userId).map(res => res.json()).subscribe(data => {
             // this.loading.dismiss();
          const frindsLoc = this.userDetails.friendsLocations;
+          this.friendCount = frindsLoc.length;
          for(let friendInfo of frindsLoc) {
             let userName = '';
             let getFriendLoc = new google.maps.LatLng(friendInfo.lat, friendInfo.lan);
@@ -113,6 +123,7 @@ export class TrackmapPage implements OnInit {
                 return '';
             }
             }); 
+
             // userName = this.getFriendName(friendInfo.id);
             this.createMapMarker(getFriendLoc, userName);
           }
@@ -125,11 +136,13 @@ export class TrackmapPage implements OnInit {
         var marker = new google.maps.Marker({
             map: this.map,
             position: place,
+            icon:'assets/images/user_marker.png',
             animation: google.maps.Animation.DROP
         });
         google.maps.event.addListener(marker, 'click', () => {
             this.selectedFriend = name;
             this.endpoint = place;
+            this.trackCase = true;
             // infoWindow.open(this.map, marker);
            
         });
@@ -151,7 +164,10 @@ export class TrackmapPage implements OnInit {
 
     //getting directions
     public calculateAndDisplayRoute() {
+        this.trackCase = false;
         this.enableDirection = true;
+        this.setMapOnAll(null);
+        this.markers = [];
         let directionsService = new google.maps.DirectionsService;
         let directionsDisplay = new google.maps.DirectionsRenderer;
 
@@ -161,7 +177,8 @@ export class TrackmapPage implements OnInit {
         directionsService.route({
             origin: this.startpoint,
             destination: this.endpoint,
-            travelMode: google.maps.TravelMode['DRIVING']
+            optimizeWaypoints: true,
+            travelMode:'DRIVING'
         }, (res, status) => {
 
             if (status == google.maps.DirectionsStatus.OK) {
@@ -172,6 +189,13 @@ export class TrackmapPage implements OnInit {
 
         });
     }
+     
+    setMapOnAll(map) {
+        for (var i = 0; i < this.markers.length; i++) {
+          this.markers[i].setMap(map);
+        }
+    }
+
     getFriendName(fid){
         this.userDetails.friends.forEach((Fnds) => { 
             if(Fnds.id == fid){

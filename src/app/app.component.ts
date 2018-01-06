@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Diagnostic } from '@ionic-native/diagnostic';
 
+import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
+
 import{ LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 @Component({
@@ -16,11 +18,13 @@ export class MyApp {
   constructor(public platform: Platform, statusBar: StatusBar, public angfire: AngularFireAuth,
      public diagnostic: Diagnostic,
      public alertCtrl: AlertController,
+     private locationTracker:LocationTrackerProvider,
    splashScreen: SplashScreen) {
     this.platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
       this.checkLocation();
+      this.locationTracker.GetCurrentLocation();
       this.ValidateUser();
     });
   }
@@ -43,6 +47,7 @@ export class MyApp {
               if(!isAvailable){
                 this.showLocationCheck();
               }
+              this.locationTracker.GetCurrentLocation();
           });
     });
   }

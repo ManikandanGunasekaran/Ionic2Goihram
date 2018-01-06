@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
 
 
@@ -25,6 +25,7 @@ export class HomePage implements OnInit{
   userEmail: any;
   loading: Loading;
   getfriends: any;
+  subscription: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: Http,
@@ -58,9 +59,12 @@ export class HomePage implements OnInit{
      
   }
   ngOnInit() {
-    this.locationTracker.GetCurrentLocation();
+    console.log('home page');
   }
-  
+  ionViewDidLoad() {
+        console.log('ionViewDidLoad HomePage');
+        // this.GetMyFriendLocation();
+    }
   public MoveToTrackPage(){
       this.navCtrl.push(TrackmapPage, {userId: this.userId});
   }
@@ -83,7 +87,7 @@ export class HomePage implements OnInit{
   // }
   public getUserDetails(){
     // this.showLoader();
-        this.locationTracker.getUserDetails(this.userId).subscribe(data => {
+        this.subscription = this.locationTracker.getUserDetails(this.userId).subscribe(data => {
             console.log(data);
             this.storage.set('userDetails', data.data);
             this.loading.dismiss();
@@ -109,5 +113,9 @@ export class HomePage implements OnInit{
         this.loading = this.loadingCtrl.create();
         this.loading.present();
       }
+
+   ngOnDestroy() {
+  this.subscription.unsubscribe();
+}
   
 }

@@ -20,8 +20,8 @@
     </ion-card>
   <div #map id="map"></div>
   <!-- <label>{{locationTracker.lat}}</label> -->
-  <span *ngIf="!selectedFriend" class="card-title">Select Friend to Track...</span>
-  <span *ngIf="selectedFriend" class="card-title">{{selectedFriend}}</span>
+  <span *ngIf="friendCase" class="card-title">You have {{friendCount}} friends to track..</span>
+  <span *ngIf="trackCase" class="card-title">{{selectedFriend}} is ready to track..</span>
   <div cardTheme>
   <!-- <ion-card cardTheme style="height:100%;width: 100%"> -->
     <ion-row>
@@ -38,7 +38,7 @@
             </button>
       </ion-col>
       <ion-col>
-        <button (click)="calculateAndDisplayRoute()" block clear ion-button butonstyle>
+        <button [disabled]="!trackCase" (click)="calculateAndDisplayRoute()" block clear ion-button butonstyle>
               <ion-icon iconTheme name="locate"></ion-icon>
               Track
             </button>
