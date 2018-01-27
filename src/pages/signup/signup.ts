@@ -6,7 +6,9 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase';
 
-import { LoginPage } from '../login/login';
+import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
+
+// import { LoginPage } from '../login/login';
 
 @Component({
     selector: 'page-signup',
@@ -22,11 +24,12 @@ export class SignupPage {
         public loadingCtrl: LoadingController,
         public formBuilder: FormBuilder,
         private alertCtrl: AlertController,
+        private locationTracker: LocationTrackerProvider,
         public http: Http) {
         this.newUserForm = this.formBuilder.group({
             'newUserProfileName': ['', Validators.required],
-            'newUserMobile': ['', [Validators.maxLength(13), Validators.required]],
-            'newUserEmail': ['', Validators.required],
+            'newUserMobile': ['', [Validators.minLength(10), Validators.maxLength(13), Validators.required]],
+            'newUserEmail': ['', [Validators.required,Validators.email]],
             'newUserPassword': ['', Validators.required]
         });
     }
@@ -72,26 +75,32 @@ export class SignupPage {
         // this.http.post('/register', this.userInfo)
         this.http.post('https://tracker-rest-service.herokuapp.com/user-details/register', this.userInfo)
             .subscribe(data => {
-                console.log(data);
+                console.log("Service Success"+data);
                 // firebaseRegistration
                 this.angfire.auth.createUserWithEmailAndPassword(Email, Password)
                     .then(() => {
                         this.loading.dismiss().then(() => {
+                        	this.locationTracker.setEmail(Email);
                             this.showError('User Registered','Success');
-                            this.navCtrl.push(LoginPage);
+                            // this.navCtrl.push(LoginPage);
                         });
                     }, (error) => {
                         this.loading.dismiss().then(() => {
                             console.error(error);
-                            this.showError('Service Down','Failed');
+                            this.showError('firebase error','Failed');
                         });
                     });
                 const requestRef = firebase.database().ref('GoIhram');
                 requestRef.push({ EmailId: Email, userId: JSON.parse(data.text())['data'].id});
             }, error => {
-                console.log(error); // Error getting the data
+                console.log("SignUp Servie Down"+error); // Error getting the data
                 this.loading.dismiss();
-                this.showError('Service Down','Failed');
+                const errInfo = error.json();
+                if(errInfo.errorInformation) {
+					this.showError(errInfo.errorInformation.message,'Failed');
+                } else {
+	                this.showError('Service Down','Failed');
+                }
             });
       
     }

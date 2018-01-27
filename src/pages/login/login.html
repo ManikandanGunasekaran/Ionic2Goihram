@@ -44,11 +44,16 @@
                </ion-col>
            </ion-row>
       </form>  
-      <ion-row>
-        <ion-col>
-            <button ion-button class="register-btn" block clear (click)="UserSignUp()">Sign up</button>
-        </ion-col>
+      <ion-row clear class="register-btn">
+        <ion-label clear (click)="resetPassword()" text-right >Forget-Password?</ion-label>
+        <ion-label clear (click)="UserSignUp()" text-left >New-User</ion-label>
       </ion-row>
+     <!--  <ion-row>
+        <ion-col>
+          <button ion-button class="register-btn" block clear ></button>
+          <button ion-button class="register-btn" block clear ></button>
+        </ion-col>
+      </ion-row> -->
     
          </div>
 </ion-content>

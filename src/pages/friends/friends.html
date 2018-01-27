@@ -17,6 +17,7 @@
         <ion-segment [(ngModel)]="FriendsTab">
             <ion-segment-button value="FRIENDS">
               FRIENDS
+
               </ion-segment-button>
           <ion-segment-button value="PENDING">
               PENDING 
@@ -29,15 +30,17 @@
       </div>
       <div [ngSwitch]="FriendsTab">
           <ion-list *ngSwitchCase="'FRIENDS'">
+
               <ion-item-sliding *ngFor="let key of approvedFriends">
-                  <ion-item style="background-color: black">
+                  <ion-item #item style="background-color: black">
                     <ion-avatar item-left>
                       <img src="assets/images/defaultProfilePicture.jpg">
                     </ion-avatar>
                     <h2 style="color:white">{{key.displayName}}</h2>
+                    <ion-icon item-right style="color:white" name="arrow-back"></ion-icon>
                   </ion-item>
                   <ion-item-options>
-                    <button danger (click)="DeleteRequest(key.friendId)">
+                    <button danger expandable (click)="DeleteRequest(key.friendId)">
                       <ion-icon name="trash"></ion-icon> Delete</button>
                   </ion-item-options>
                 </ion-item-sliding>
@@ -54,7 +57,7 @@
                   <ion-item-options>
                     <button danger (click)="DeleteRequest(key.friendId)">
                       <ion-icon name="trash"></ion-icon> Reject</button>
-                      <button danger *ngIf="key.status!='WAITING'" (click)="ApproveRequest(key.friendId);">
+                      <button danger expandable *ngIf="key.status!='WAITING'" (click)="ApproveRequest(key.friendId);">
                           <ion-icon name="trash"></ion-icon> Approve</button>
                   </ion-item-options>
                 </ion-item-sliding>

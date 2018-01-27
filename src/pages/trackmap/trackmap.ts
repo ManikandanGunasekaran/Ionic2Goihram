@@ -1,10 +1,7 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
-import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Storage } from '@ionic/storage';
-import { FriendsPage } from '../friends/friends';
 
 import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
 
@@ -16,7 +13,7 @@ declare var google: any;
 export class TrackmapPage implements OnInit {
     @ViewChild('map') mapElement: ElementRef;
     @ViewChild('directionsPanel') directionsPanel: ElementRef;
-    map: any;
+    map:any;
     markers = [];
     loading: Loading;
     userId: any;
@@ -24,33 +21,26 @@ export class TrackmapPage implements OnInit {
     trackCase = false;
     friendCase = false;
     friendCount = 0;
-    getCurrentLoc: any;
     startpoint: any;
     endpoint = new google.maps.LatLng(13.138039, 80.31597);
-    markerposition: any;
-    task: any;
-    myCurrentLocation = {};
     userDetails: any;
-    FriendsPage = FriendsPage;
     enableDirection = false;
+    scheduleInterval: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
       public loadingCtrl: LoadingController,
-      public geolocation: Geolocation,
       public http: Http,
-      public locationTracker:LocationTrackerProvider,
-      public storage: Storage
+      public locationTracker:LocationTrackerProvider
       ) {
-        this.storage.get('userDetails').then((data) => {
+       
+    }
+
+    ionViewDidEnter() {
+         this.locationTracker.getUserDetail().then((data) => {
             console.log(data);
             this.userId = this.navParams.get('userId'); 
             this.userDetails = data;
         });
-    }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad TrackmapPage');
-        // this.GetMyFriendLocation();
     }
 
     ngOnInit() {
@@ -58,19 +48,17 @@ export class TrackmapPage implements OnInit {
         this.trackCase = false;
         this.friendCase = false;
         this.userId = this.navParams.get('userId'); 
-        // this.getCurrentLoc = this.navParams.get('currentLoc'); 
         this.locationTracker.GetCurrentLocation();
         this.initMap();
-    //     this.task = setInterval(function(){
-    //     this.markers[0].
-    // }, 3000);
     }
-
+    ngOnDestroy() {
+        this.myStopFunction();
+    }
     
     //current location
     public initMap() {
-       
         let mapOptions = {};
+        this.myStopFunction();
         this.startpoint = new google.maps.LatLng(this.locationTracker.lat, this.locationTracker.lan);
         this.updateMyLocation();
         mapOptions = {
@@ -82,10 +70,13 @@ export class TrackmapPage implements OnInit {
 
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
         this.createMapMarker(this.startpoint, this.userId);
-    
-       
+
     }
 
+   
+    myStopFunction() {
+        clearInterval(this.scheduleInterval);
+    }
     updateMyLocation(){
       this.enableDirection = false;
       this.selectedFriend = '';
@@ -103,15 +94,11 @@ export class TrackmapPage implements OnInit {
     }
 
     GetMyFriendLocation(){
+        this.myStopFunction();
         this.enableDirection = false;
         this.trackCase = false;
         this.friendCase = true;
         this.selectedFriend = '';
-        // this.showLoader();
-        // // let friendLocUrl ='https://tracker-rest-service.herokuapp.com/locations/get-friends-location';
-        // let friendLocUrl ='/get-friends-location';
-        // this.http.get(friendLocUrl+'/'+ this.userId).map(res => res.json()).subscribe(data => {
-            // this.loading.dismiss();
          const frindsLoc = this.userDetails.friendsLocations;
           this.friendCount = frindsLoc.length;
          for(let friendInfo of frindsLoc) {
@@ -123,14 +110,10 @@ export class TrackmapPage implements OnInit {
                 return '';
             }
             }); 
-
-            // userName = this.getFriendName(friendInfo.id);
             this.createMapMarker(getFriendLoc, userName);
           }
-        // },onerror =>{ 
-        //     // this.loading.dismiss();
-        // });
     }
+
     //marker for current location
     public createMapMarker(place: any, name: string): void {
         var marker = new google.maps.Marker({
@@ -143,30 +126,17 @@ export class TrackmapPage implements OnInit {
             this.selectedFriend = name;
             this.endpoint = place;
             this.trackCase = true;
-            // infoWindow.open(this.map, marker);
-           
         });
-        // let content = "<h3>Mani</h3><h5>Chennai</h5>";
-        // this.addInfoWindow(marker, content);
         this.markers.push(marker);
     }
 
-    // addInfoWindow(marker, content) {
-    //     let infoWindow = new google.maps.InfoWindow({
-    //         content: content
-    //     });
-    //     google.maps.event.addListener(marker, 'click', () => {
-    //         this.selectedFriend = 'Mani';
-    //         // infoWindow.open(this.map, marker);
-           
-    //     });
-    // }
-
     //getting directions
     public calculateAndDisplayRoute() {
+        this.myStopFunction();
         this.trackCase = false;
         this.enableDirection = true;
         this.setMapOnAll(null);
+        this.startpoint = new google.maps.LatLng(this.locationTracker.lat, this.locationTracker.lan);
         this.markers = [];
         let directionsService = new google.maps.DirectionsService;
         let directionsDisplay = new google.maps.DirectionsRenderer;
@@ -188,6 +158,10 @@ export class TrackmapPage implements OnInit {
             }
 
         });
+
+        this.scheduleInterval = setInterval(() => {
+            this.calculateAndDisplayRoute();
+        }, 20000);
     }
      
     setMapOnAll(map) {
@@ -205,7 +179,11 @@ export class TrackmapPage implements OnInit {
 
     }
     showLoader(){
-        this.loading = this.loadingCtrl.create();
+        this.loading = this.loadingCtrl.create({
+            content: 'Please wait...',
+            dismissOnPageChange: true,
+            spinner: 'dots'
+        });
         this.loading.present();
       }
 

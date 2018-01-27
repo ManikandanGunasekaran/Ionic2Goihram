@@ -24,7 +24,7 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
       this.checkLocation();
-      this.locationTracker.GetCurrentLocation();
+      // this.locationTracker.GetCurrentLocation();
       this.ValidateUser();
     });
   }
@@ -34,6 +34,7 @@ export class MyApp {
       if (!user) {
         this.rootPage = LoginPage;
       } else { 
+        this.locationTracker.setEmail(user.email);
         this.rootPage = HomePage;
       }
     });

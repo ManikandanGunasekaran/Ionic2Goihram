@@ -4,6 +4,7 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 
 import 'rxjs/add/operator/filter';
 import { Http } from '@angular/http';
+import {Storage} from "@ionic/storage";
 
 @Injectable()
 export class LocationTrackerProvider {
@@ -14,27 +15,15 @@ export class LocationTrackerProvider {
     public friends: any;
     // loading: Loading;
     constructor(public geolocation: Geolocation, 
-        public http: Http,
+        private storage:Storage,
+        private http: Http,
         // public loadingCtrl: LoadingController,
-         public zone: NgZone) {
+         private zone: NgZone) {
         console.log('Hello LocationTrackerProvider Provider');
     }
 
     public GetCurrentLocation() {
-        // this.geolocation.getCurrentPosition().then((position) => {
-
-        //          // this.zone.run(() => {
-        //      	this.lat = position.coords.latitude;
-        //      	this.lan = position.coords.longitude;
-
-        //     // });
-        //     // return this.myCurrentLocation;
-
-        // }, (err) => {
-
-        //   console.log(err);
-
-        // });
+       
         let options = {
             frequency: 3000,
             enableHighAccuracy: true
@@ -50,11 +39,36 @@ export class LocationTrackerProvider {
 
     }
 
+
     public getUserDetails(userId){
          let getUserDetails ='https://tracker-rest-service.herokuapp.com/user-details/read-everything';
         // let getUserDetails ='/read-everything';
          return  this.http.get(getUserDetails+'/'+userId).map(res => res.json());
-     }
+    }
+    //store the email address
+    public setEmail(email){
+        this.storage.set('email',email);
+    }
+ 
+    //get the stored email
+    public getEmail(){
+        return this.storage.get('email');
+    }
+     //store the email address
+    public setUserDetail(data){
+        this.storage.set('userDetails',[]);
+        this.storage.set('userDetails',data);
+    }
+ 
+    //get the stored email
+    public getUserDetail(){
+        return this.storage.get('userDetails');
+    }
+ 
+    //clear the whole local storage
+    public clearStorage(){
+        this.storage.clear();
+    }
 
 
 }

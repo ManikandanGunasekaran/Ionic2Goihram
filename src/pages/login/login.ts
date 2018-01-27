@@ -3,9 +3,9 @@ import { NavController, NavParams, Loading, LoadingController , AlertController}
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { Storage } from '@ionic/storage';
-import { Observable } from 'rxjs/Observable';
 import { SignupPage } from '../signup/signup';
+
+import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
 
 @Component({
     selector: 'page-login',
@@ -16,68 +16,72 @@ export class LoginPage {
     loginForm: any;
     userEmail: any;
     rootPage: any;
-    billList: Observable<any[]>;
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
         public angfire: AngularFireAuth,
         public loadingCtrl: LoadingController,
         public formBuilder: FormBuilder,
-        private storage: Storage,
-        private alertCtrl: AlertController
+        private alertCtrl: AlertController,
+         private locationTracker: LocationTrackerProvider
        
     ) {
         this.loginForm = this.formBuilder.group({
-            'email': ['', Validators.required],
+            'email': ['', [Validators.required, Validators.email]],
             'password': ['', [Validators.required]]
         });
 
     }
 
     ionViewDidLoad() {
+        console.log('ionViewDidLoad Login');
+       this.locationTracker.clearStorage();
     }
 
     UserSignUp() {
         this.navCtrl.push(SignupPage);
     }
+    
     showLoading() {
         this.loading = this.loadingCtrl.create({
             content: 'Please wait...',
-            dismissOnPageChange: true
+            spinner: 'dots'
         });
         this.loading.present();
     }
-    showError() {
+
+    showError(error) {
         this.loading.dismiss();
 
         let alert = this.alertCtrl.create({
             title: 'Failed',
-            subTitle: 'User Not Registered',
+            subTitle: error,
             buttons: ['Ok']
         });
         alert.present();
     }
-    UserSignIn() {
-        this.storage.clear();
+    resetPassword(): any {
+        this.showLoading();
         this.userEmail = this.loginForm.controls.email.value;
-  
-        this.storage.set('userEmail', this.userEmail);
-        
+        if(this.userEmail){
+            return this.angfire.auth.sendPasswordResetEmail(this.userEmail);
+        } else {
+            this.showError('Please Enter Email Id');
+        }
+    }
+
+    UserSignIn() {
+        this.userEmail = this.loginForm.controls.email.value;
+        this.locationTracker.setEmail(this.userEmail);
         this.showLoading();
         this.angfire.auth.signInWithEmailAndPassword(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
             .then(auth => {
               console.log(auth);
-              // const userId = 9;
-              //   this.locationTracker.getUserDetails(userId).subscribe(data => {
-              //       console.log(data);
-              //       this.storage.set('userDetails', data.data);
-              //       this.loading.dismiss();
-              //   }); 
+              this.loading.dismiss();
             })
-            
             .catch(err => {
                 this.loading.dismiss().then( () => {
                     console.log("" + err);
-                    this.showError();
+                    this.showError('User Not Registered');
                 });
             });
             
