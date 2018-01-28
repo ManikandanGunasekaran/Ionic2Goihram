@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
+import { NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
+
+
 @Component({
     selector: 'page-friends',
     templateUrl: 'friends.html',
@@ -19,11 +21,11 @@ export class FriendsPage {
     pendingFriends = [];
     loading: Loading;
     userDetails: any;
-    constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController,
-        public http: Http,
+    constructor(public navParams: NavParams, private loadingCtrl: LoadingController,
+        private http: Http,
         private alertCtrl: AlertController,
-        public locationTracker: LocationTrackerProvider,
-        public formBuilder: FormBuilder) {
+        private locationTracker: LocationTrackerProvider,
+        private formBuilder: FormBuilder) {
 
         this.FriendsTab = 'FRIENDS';
         this.userId = navParams.get('userId');
@@ -33,8 +35,6 @@ export class FriendsPage {
         });
         // this.GetAllFriends();
         this.locationTracker.getUserDetail().then((data) => {
-            // this.storage.get('userDetails').then((data) => {
-            console.log(data);
             this.userDetails = data;
             this.updateFriendList(this.userDetails.friendsStatus);
         });
@@ -42,23 +42,21 @@ export class FriendsPage {
     }
 
     SendFriendRequest() {
-        console.log("send friend Request");
         this.showLoader();
         let friendMobilenumber = this.addFriendForm.controls.mobilenumber.value;
         // let sendReqUrl ='/send-friend-request';
         let sendReqUrl = 'https://tracker-rest-service.herokuapp.com/friends/send-friend-request';
         this.http.post(sendReqUrl + '/' + this.userId + '/' + friendMobilenumber, null).map(res => res.json())
-        .subscribe(data => {
-                console.log(data);
-                this.showError('Request Sent successfully','Success');
+            .subscribe(data => {
+                this.showError('Request Sent successfully', 'Success');
                 this.loading.dismiss();
-            },error => {
-             let errorData = error.json();
-             if(errorData.errorInformation.developerMessage){
-                 this.showError(errorData.errorInformation.developerMessage,'Error');
-             }
-            this.loading.dismiss();
-        });
+            }, error => {
+                let errorData = error.json();
+                if (errorData.errorInformation.developerMessage) {
+                    this.showError(errorData.errorInformation.developerMessage, 'Error');
+                }
+                this.loading.dismiss();
+            });
         this.addFriendForm.controls.name.setValue('');
         this.addFriendForm.controls.mobilenumber.setValue('');
     }
@@ -102,9 +100,7 @@ export class FriendsPage {
                 }
             });
 
-            console.log(data);
         });
-        console.log('getReq');
     }
 
     ApproveRequest(friendId) {
@@ -112,7 +108,6 @@ export class FriendsPage {
         // let acceptReqUrl = '/accept';
         let acceptReqUrl = 'https://tracker-rest-service.herokuapp.com/friends/accept';
         this.http.post(acceptReqUrl + '/' + this.userId + '/' + friendId, null).map(res => res.json()).subscribe(data => {
-            console.log(data);
             this.loading.dismiss();
             // this.GetAllFriends();
             //  this.removeItem(friendId);
@@ -127,8 +122,6 @@ export class FriendsPage {
         // let acceptReqUrl = '/find-friend';
         let acceptReqUrl = 'https://tracker-rest-service.herokuapp.com/friends/find-friend';
         this.http.delete(acceptReqUrl + '/' + this.userId + '/' + friendId, null).map(res => res.json()).subscribe(data => {
-            console.log(data);
-
             // this.GetAllFriends();
             this.filteredusers = this.approvedFriends;
             this.removeItem(friendId, '');
@@ -139,9 +132,7 @@ export class FriendsPage {
     GetFreindName() {
         let sendReqUrl = '/read-all-friends';
         this.http.get(sendReqUrl + '/' + this.userId).map(res => res.json()).subscribe(data => {
-
             return data.data;
-
         });
     }
 
@@ -188,7 +179,7 @@ export class FriendsPage {
         });
         alert.present();
     }
-   
+
     public removeItem(item, status) {
         for (let i = 0; i < this.filteredusers.length; i++) {
             if (this.filteredusers[i].friendId == item) {

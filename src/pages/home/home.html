@@ -16,7 +16,7 @@
     (click)="MoveToFriendsPage()">
       <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon> Friends </button> 
    
-    <button ion-item  style="background-color: #ffbf00;margin:2px;text-align: center;" >
+    <button ion-item  (click)="openModal()" style="background-color: #ffbf00;margin:2px;text-align: center;" >
       <ion-icon ios="ios-create" md="md-create"> </ion-icon> Review </button> 
     <button ion-item (click)="signout()" style="background-color: #ffbf00;margin:2px;text-align: center;">
       <ion-icon ios="ios-lock" md="md-lock">  </ion-icon> SignOut </button> 

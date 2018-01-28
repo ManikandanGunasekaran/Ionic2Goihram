@@ -3,9 +3,8 @@ import { NavController, NavParams, Loading, LoadingController , AlertController}
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { SignupPage } from '../signup/signup';
-
 import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
+import { SignupPage } from '../signup/signup';
 
 @Component({
     selector: 'page-login',
@@ -22,8 +21,8 @@ export class LoginPage {
         public loadingCtrl: LoadingController,
         public formBuilder: FormBuilder,
         private alertCtrl: AlertController,
-         private locationTracker: LocationTrackerProvider
-       
+        private locationTracker: LocationTrackerProvider
+
     ) {
         this.loginForm = this.formBuilder.group({
             'email': ['', [Validators.required, Validators.email]],
@@ -33,14 +32,13 @@ export class LoginPage {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad Login');
-       this.locationTracker.clearStorage();
+        this.locationTracker.clearStorage();
     }
 
     UserSignUp() {
         this.navCtrl.push(SignupPage);
     }
-    
+
     showLoading() {
         this.loading = this.loadingCtrl.create({
             content: 'Please wait...',
@@ -62,7 +60,7 @@ export class LoginPage {
     resetPassword(): any {
         this.showLoading();
         this.userEmail = this.loginForm.controls.email.value;
-        if(this.userEmail){
+        if (this.userEmail) {
             return this.angfire.auth.sendPasswordResetEmail(this.userEmail);
         } else {
             this.showError('Please Enter Email Id');
@@ -75,16 +73,14 @@ export class LoginPage {
         this.showLoading();
         this.angfire.auth.signInWithEmailAndPassword(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
             .then(auth => {
-              console.log(auth);
-              this.loading.dismiss();
+                this.loading.dismiss();
             })
             .catch(err => {
-                this.loading.dismiss().then( () => {
-                    console.log("" + err);
+                this.loading.dismiss().then(() => {
                     this.showError('User Not Registered');
                 });
             });
-            
+
     }
 
 }

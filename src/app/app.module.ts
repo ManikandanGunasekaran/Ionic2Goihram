@@ -21,6 +21,7 @@ import { LoginPage } from '../pages/login/login';
 import { TrackmapPage } from '../pages/trackmap/trackmap';
 import { FriendsPage } from '../pages/friends/friends';
 import { SignupPage } from '../pages/signup/signup';
+import { ReviewPage } from '../pages/review/review';
 
 
 
@@ -43,7 +44,8 @@ import { SignupPage } from '../pages/signup/signup';
     LoginPage,
     TrackmapPage,
     FriendsPage,
-    SignupPage
+    SignupPage,
+    ReviewPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ import { SignupPage } from '../pages/signup/signup';
     LoginPage,
     TrackmapPage,
     FriendsPage,
-    SignupPage
+    SignupPage,
+    ReviewPage
   ],
   providers: [
 

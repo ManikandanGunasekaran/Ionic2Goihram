@@ -1,23 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
-
-
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { Component, OnDestroy } from '@angular/core';
+import { NavController, AlertController, Loading, LoadingController, ModalController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 
 import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
 
-// import { LoginPage } from '../login/login';
 import { TrackmapPage } from '../trackmap/trackmap';
 import { FriendsPage } from '../friends/friends';
+import { ReviewPage } from '../review/review';
 
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html'
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnDestroy  {
     userId: number;
     myCurrentLocation = {};
     userEmail: any;
@@ -25,23 +21,26 @@ export class HomePage implements OnInit {
     getfriends: any;
     subscription: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams,
-        public http: Http,
+    constructor(private navCtrl: NavController,
         private alertCtrl: AlertController,
-        public loadingCtrl: LoadingController,
-        public angfire: AngularFireAuth,
+        private loadingCtrl: LoadingController,
+        private modalCtrl: ModalController,
+        private angfire: AngularFireAuth,
         private locationTracker: LocationTrackerProvider
     ) {
       
     }
-    ngOnInit() {
-        console.log('home page');
-    }
+   
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
+
+    openModal() {
+        let myModal = this.modalCtrl.create(ReviewPage);
+        myModal.present();
+    }
+
     ionViewDidEnter(){
-         console.log('ionViewDidEnter HomePage');
           this.locationTracker.getEmail().then((data) => {
             this.showLoader();
             this.userEmail = data;
@@ -51,27 +50,19 @@ export class HomePage implements OnInit {
                 .once('value')
                 .then(snapshot => snapshot.val())
                 .then((data) => {
-                    console.log("firebaseGetUserId"+this.userEmail);
-                    console.log("firebaseGetUserId"+data);
                     if(data===null){
                         this.loading.dismiss();
                         this.showError('Something Went Wrong, try after sometime');
                     }
                     for (var val in data) {
                         if (data.hasOwnProperty(val)) {
-                            console.log(data[val]);
                             this.userId = data[val].userId;
-                            console.log(this.userId);
                             this.getUserDetails();
-                            // this.loading.dismiss();
                         }
                     }
 
                 }, (error) => {
-                        this.loading.dismiss().then(() => {
-                            console.error("firebaseGetUserId"+error);
-                            this.loading.dismiss();
-                        });
+                    this.loading.dismiss();
                 });
         });
     }
@@ -85,28 +76,14 @@ export class HomePage implements OnInit {
             userId: this.userId
         });
     }
-    // public GetUserId(){
-    //   this.showLoader();
-    //       let getUserDetail ='https://tracker-rest-service.herokuapp.com/user-details/read-by-email';
-    //       // let getUserDetail = '/read-by-email';
-    //       this.http.get(getUserDetail+'/'+ this.userEmail +'/').map(res => res.json()).subscribe(data => {
-    //           console.log( data);
-    //           this.loading.dismiss();
-    //           this.userId = data.data.id;
-    //       },onerror =>{ 
-    //         this.loading.dismiss();
-    //           this.showError();
-
-    //       });
-    // }
+   
     public getUserDetails() {
-        console.log('getUserDetailscalled');
-        // this.showLoader();
+       
         this.subscription = this.locationTracker.getUserDetails(this.userId).subscribe(data => {
-            console.log(data);
-            // this.storage.set('userDetails', data.data);
             this.locationTracker.setUserDetail(data.data);
-            this.loading.dismiss();
+            this.loading.dismiss().then(() => {
+                // this.locationTracker.checkLocation();
+            });
         }, onerror => {
             this.loading.dismiss();
         });
@@ -124,7 +101,7 @@ export class HomePage implements OnInit {
         });
         alert.present();
     }
-
+    
     public showLoader() {
         this.loading = this.loadingCtrl.create({
             content: 'Please wait...',
@@ -133,7 +110,5 @@ export class HomePage implements OnInit {
         });
         this.loading.present();
     }
-
-   
 
 }

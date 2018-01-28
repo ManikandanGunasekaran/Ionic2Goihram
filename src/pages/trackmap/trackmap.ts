@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
+import { NavParams, Loading, LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
@@ -10,14 +10,14 @@ declare var google: any;
     selector: 'page-trackmap',
     templateUrl: 'trackmap.html',
 })
-export class TrackmapPage implements OnInit {
+export class TrackmapPage implements OnInit, OnDestroy  {
     @ViewChild('map') mapElement: ElementRef;
     @ViewChild('directionsPanel') directionsPanel: ElementRef;
-    map:any;
+    map: any;
     markers = [];
     loading: Loading;
     userId: any;
-    selectedFriend : string;
+    selectedFriend: string;
     trackCase = false;
     friendCase = false;
     friendCount = 0;
@@ -27,18 +27,17 @@ export class TrackmapPage implements OnInit {
     enableDirection = false;
     scheduleInterval: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams,
-      public loadingCtrl: LoadingController,
-      public http: Http,
-      public locationTracker:LocationTrackerProvider
-      ) {
-       
+    constructor(private navParams: NavParams,
+        private loadingCtrl: LoadingController,
+        private http: Http,
+        private locationTracker: LocationTrackerProvider
+    ) {
+
     }
 
     ionViewDidEnter() {
-         this.locationTracker.getUserDetail().then((data) => {
-            console.log(data);
-            this.userId = this.navParams.get('userId'); 
+        this.locationTracker.getUserDetail().then((data) => {
+            this.userId = this.navParams.get('userId');
             this.userDetails = data;
         });
     }
@@ -47,14 +46,76 @@ export class TrackmapPage implements OnInit {
         this.selectedFriend = '';
         this.trackCase = false;
         this.friendCase = false;
-        this.userId = this.navParams.get('userId'); 
+        this.userId = this.navParams.get('userId');
         this.locationTracker.GetCurrentLocation();
         this.initMap();
     }
     ngOnDestroy() {
         this.myStopFunction();
     }
-    
+
+    myStopFunction() {
+        clearInterval(this.scheduleInterval);
+    }
+
+    updateMyLocation() {
+        this.enableDirection = false;
+        this.selectedFriend = '';
+        this.trackCase = false;
+        this.friendCase = false;
+        let mylocation = {
+            lat: this.locationTracker.lat,
+            lan: this.locationTracker.lan
+        }
+        // let url = '/add-location';
+        let url = 'https://tracker-rest-service.herokuapp.com/locations/add-location';
+        this.http.post(url + '/' + this.userId, mylocation).subscribe(data => {});
+    }
+
+    GetMyFriendLocation() {
+        this.myStopFunction();
+        this.enableDirection = false;
+        this.trackCase = false;
+        this.friendCase = true;
+        this.selectedFriend = '';
+        const frindsLoc = this.userDetails.friendsLocations;
+        this.friendCount = frindsLoc.length;
+        for (let friendInfo of frindsLoc) {
+            let userName = '';
+            let getFriendLoc = new google.maps.LatLng(friendInfo.lat, friendInfo.lan);
+            this.userDetails.friends.forEach((Fnds) => {
+                if (Fnds.id == friendInfo.id) {
+                    userName = Fnds.firstName;
+                    return '';
+                }
+            });
+            this.createMapMarker(getFriendLoc, userName);
+        }
+    }
+
+    setMapOnAll(map) {
+        for (var i = 0; i < this.markers.length; i++) {
+            this.markers[i].setMap(map);
+        }
+    }
+
+    getFriendName(fid) {
+        this.userDetails.friends.forEach((Fnds) => {
+            if (Fnds.id == fid) {
+                return Fnds.firstName;
+            }
+        })
+
+    }
+    showLoader() {
+        this.loading = this.loadingCtrl.create({
+            content: 'Please wait...',
+            dismissOnPageChange: true,
+            spinner: 'dots'
+        });
+        this.loading.present();
+    }
+
     //current location
     public initMap() {
         let mapOptions = {};
@@ -62,64 +123,22 @@ export class TrackmapPage implements OnInit {
         this.startpoint = new google.maps.LatLng(this.locationTracker.lat, this.locationTracker.lan);
         this.updateMyLocation();
         mapOptions = {
-        center: this.startpoint,
-        zoom: 12,
-        zoomControl: true,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+            center: this.startpoint,
+            zoom: 12,
+            zoomControl: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         }
 
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
         this.createMapMarker(this.startpoint, this.userId);
 
     }
-
-   
-    myStopFunction() {
-        clearInterval(this.scheduleInterval);
-    }
-    updateMyLocation(){
-      this.enableDirection = false;
-      this.selectedFriend = '';
-      this.trackCase = false;
-      this.friendCase = false;
-      let mylocation = {
-          lat:this.locationTracker.lat,
-          lan:this.locationTracker.lan
-      }
-      // let url = '/add-location';
-      let url = 'https://tracker-rest-service.herokuapp.com/locations/add-location';
-      this.http.post(url+'/'+ this.userId, mylocation).subscribe(data => {
-        console.log(data);
-      });
-    }
-
-    GetMyFriendLocation(){
-        this.myStopFunction();
-        this.enableDirection = false;
-        this.trackCase = false;
-        this.friendCase = true;
-        this.selectedFriend = '';
-         const frindsLoc = this.userDetails.friendsLocations;
-          this.friendCount = frindsLoc.length;
-         for(let friendInfo of frindsLoc) {
-            let userName = '';
-            let getFriendLoc = new google.maps.LatLng(friendInfo.lat, friendInfo.lan);
-             this.userDetails.friends.forEach((Fnds) => { 
-            if(Fnds.id == friendInfo.id){
-                userName = Fnds.firstName;
-                return '';
-            }
-            }); 
-            this.createMapMarker(getFriendLoc, userName);
-          }
-    }
-
     //marker for current location
     public createMapMarker(place: any, name: string): void {
         var marker = new google.maps.Marker({
             map: this.map,
             position: place,
-            icon:'assets/images/user_marker.png',
+            icon: 'assets/images/user_marker.png',
             animation: google.maps.Animation.DROP
         });
         google.maps.event.addListener(marker, 'click', () => {
@@ -148,13 +167,11 @@ export class TrackmapPage implements OnInit {
             origin: this.startpoint,
             destination: this.endpoint,
             optimizeWaypoints: true,
-            travelMode:'DRIVING'
+            travelMode: 'DRIVING'
         }, (res, status) => {
 
             if (status == google.maps.DirectionsStatus.OK) {
                 directionsDisplay.setDirections(res);
-            } else {
-                console.warn(status);
             }
 
         });
@@ -163,28 +180,5 @@ export class TrackmapPage implements OnInit {
             this.calculateAndDisplayRoute();
         }, 20000);
     }
-     
-    setMapOnAll(map) {
-        for (var i = 0; i < this.markers.length; i++) {
-          this.markers[i].setMap(map);
-        }
-    }
-
-    getFriendName(fid){
-        this.userDetails.friends.forEach((Fnds) => { 
-            if(Fnds.id == fid){
-                return Fnds.firstName;
-            }
-        }) 
-
-    }
-    showLoader(){
-        this.loading = this.loadingCtrl.create({
-            content: 'Please wait...',
-            dismissOnPageChange: true,
-            spinner: 'dots'
-        });
-        this.loading.present();
-      }
 
 }

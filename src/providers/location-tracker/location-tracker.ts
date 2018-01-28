@@ -1,10 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
-// import { Loading, LoadingController } from 'ionic-angular';
+import { Platform, AlertController } from 'ionic-angular';
 
 import 'rxjs/add/operator/filter';
 import { Http } from '@angular/http';
 import {Storage} from "@ionic/storage";
+import { Diagnostic } from '@ionic-native/diagnostic';
 
 @Injectable()
 export class LocationTrackerProvider {
@@ -15,10 +16,12 @@ export class LocationTrackerProvider {
     public friends: any;
     // loading: Loading;
     constructor(public geolocation: Geolocation, 
+        private platform: Platform,
+        private alertCtrl: AlertController,
+        private diagnostic: Diagnostic,
         private storage:Storage,
         private http: Http,
-        // public loadingCtrl: LoadingController,
-         private zone: NgZone) {
+        private zone: NgZone) {
         console.log('Hello LocationTrackerProvider Provider');
     }
 
@@ -37,6 +40,36 @@ export class LocationTrackerProvider {
                 });
             });
 
+    }
+
+    public checkLocation() {
+        this.platform.ready().then((readySource) => {
+            this.diagnostic.isLocationEnabled().then(
+                (isAvailable) => {
+                    if (!isAvailable) {
+                        this.showLocationCheck();
+                    }
+                    this.GetCurrentLocation();
+                });
+        });
+    }
+
+    public showLocationCheck() {
+        let alert = this.alertCtrl.create({
+            subTitle: 'To continue let your device turn on location, which uses Google Location Service',
+            buttons: [{
+                    text: 'Cancel',
+                },
+                {
+                    text: 'Ok',
+                    handler: () => {
+                        return this.diagnostic.switchToLocationSettings();
+                    }
+                }
+            ],
+
+        });
+        alert.present();
     }
 
 
