@@ -4,27 +4,52 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-  <ion-navbar  align-title="center">
-    <ion-title text-align="center">
-      Track Friends
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+
 
 <ion-content>
-  <ion-card>
+  <ion-card style="background-color: #ffbf00;" *ngIf="panelDisplay">
+    <!-- <button style="background-color: black;float:right;" ion-button icon-only item-right>
+    <ion-icon name="close"></ion-icon>
+  </button> -->
+  <ion-buttons end>
+                <button style="background-color: black;" ion-button icon-only (click)="closeModal()">
+                    <ion-icon item-right name="ios-close-outline"></ion-icon>
+                </button>
+            </ion-buttons>
         <ion-card-content>
             <div #directionsPanel></div>
         </ion-card-content>
     </ion-card>
   <div #map id="map"></div>
+  <!-- <div>
+     <button style="background-color: #ffbf00;color: black;width: 60%;" ion-button type="submit">
+     SHOW PANEL</button>
+  </div> -->
   <!-- <label>{{locationTracker.lat}}</label> -->
+   <ion-fab bottom right>
+    <button (click)="showDirectionPanel()" ion-fab mini><ion-icon md="md-open"></ion-icon></button>
+  </ion-fab>
   <span *ngIf="friendCase" class="card-title">You have {{friendCount}} friends to track..</span>
   <span *ngIf="trackCase" class="card-title">{{selectedFriend}} is ready to track..</span>
   <div cardTheme>
   <!-- <ion-card cardTheme style="height:100%;width: 100%"> -->
-    <ion-row>
+     <ion-segment>
+        <ion-segment-button (click)="initMap()">
+              <ion-icon iconTheme name="person"></ion-icon>
+              Find Me
+        </ion-segment-button>
+        <ion-segment-button (click)="GetMyFriendLocation()" >
+           <ion-icon iconTheme name="people"></ion-icon>
+              Find Friends
+        </ion-segment-button>
+        <ion-segment-button (click)="calculateAndDisplayRoute()"  >
+             <ion-icon iconTheme name="locate"></ion-icon>
+              Track
+        </ion-segment-button>
+    </ion-segment>
+
+
+   <!--  <ion-row>
       <ion-col>
          <button (click)="initMap()" block clear ion-button butonstyle>
               <ion-icon iconTheme name="person"></ion-icon>
@@ -42,9 +67,10 @@
               <ion-icon iconTheme name="locate"></ion-icon>
               Track
             </button>
+            
       </ion-col>
 
-    </ion-row>
+    </ion-row> -->
       <!-- <ion-item>
               
           
@@ -65,5 +91,6 @@
     </ion-buttons>
   </div> -->
 </div>
+ 
 </ion-content>
 

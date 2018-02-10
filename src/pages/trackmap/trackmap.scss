@@ -1,12 +1,18 @@
 page-trackmap {
-    #map {
-        display: block;
-    height: 87%;
-    width: 100%;
+        #map {
+            display: block;
+            height: 85%;
+            width: 100%;
         }
+
         .card-title{
-            font:12px bold;
+            font-size:10px;
         }
+
+        .button span {
+            font-size: 12px;
+        }
+
         [cardTheme]{
             height:13%;
             width:100%;
@@ -14,18 +20,34 @@ page-trackmap {
             background-color: #ffbf00;
         }
         [iconTheme]{
-            font-size: 30px;
-            color: black;
-            padding: 5px;
+            color: #ffbf00;
         }
         [butonstyle]{
             color: black;
-            font-size: 70%;
+            // font-size: 70%;
         }
         ion-card {
             max-height: 200px;
             overflow: scroll;
             position: absolute;
             z-index: 1;
+        }
+
+        ion-segment {
+            padding: 0px 12px;
+            opacity: 0.7;
+            position: relative;
+            
+        }
+        .fab-md{
+            background-color: black;
+            color: #ffbf00;
+        }
+ 
+        .segment-md .segment-button {
+            border: 1px solid white;
+            color: #ffbf00;
+            background-color: black;
+            opacity: 1;
         }
 }

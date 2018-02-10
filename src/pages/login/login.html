@@ -10,7 +10,15 @@
 
    </div>
     <div >
-      
+     <!--  <ion-row >
+        <ion-col></ion-col>
+        <ion-col></ion-col>
+        <ion-col></ion-col>
+           </ion-row> -->
+           <ion-item  style="background-color: #ffbf00;text-align:center;font-weight:bold;">
+            <div>"Lorem Ihram Lorem"
+            </div>
+           </ion-item>
       <form [formGroup]="loginForm" (submit)="UserSignIn()"> 
            <ion-row>
    
@@ -34,6 +42,7 @@
                   
              </ion-col>
            </ion-row>
+
            <ion-row>
              <ion-col>
                <!-- <button ion-button class="login-button" (click)="UserSignIn()">Sign In</button> -->
@@ -45,8 +54,9 @@
            </ion-row>
       </form>  
       <ion-row clear class="register-btn">
-        <ion-label clear (click)="resetPassword()" text-right >Forget-Password?</ion-label>
-        <ion-label clear (click)="UserSignUp()" text-left >New-User</ion-label>
+        <ion-label clear style="position: relative;right: 20px;font-size: 14px;" (click)="UserSignUp()" text-right >Sign Up</ion-label><span style="position: relative;right: 24px;">|</span>
+        <ion-label clear style="position: relative;right: 20px;font-size: 14px;" (click)="resetPassword()" text-left >Forget Password?</ion-label>
+        
       </ion-row>
      <!--  <ion-row>
         <ion-col>

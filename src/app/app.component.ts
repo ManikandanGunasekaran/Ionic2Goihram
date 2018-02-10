@@ -30,7 +30,7 @@ export class MyApp {
     ValidateUser() {
         this.angfire.auth.onAuthStateChanged(user => {
             if (!user) {
-                // this.locationTracker.checkLocation();
+                this.locationTracker.checkLocation();
                 this.rootPage = LoginPage;
             } else {
                 this.locationTracker.setEmail(user.email);

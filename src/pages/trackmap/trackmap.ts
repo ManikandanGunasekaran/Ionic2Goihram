@@ -12,7 +12,12 @@ declare var google: any;
 })
 export class TrackmapPage implements OnInit, OnDestroy  {
     @ViewChild('map') mapElement: ElementRef;
-    @ViewChild('directionsPanel') directionsPanel: ElementRef;
+    // @ViewChild('directionsPanel') directionsPanel: ElementRef;
+    public directionsPanel: ElementRef;
+
+	@ViewChild('directionsPanel') set content(content: ElementRef) {
+	   this.directionsPanel = content;
+	}
     map: any;
     markers = [];
     loading: Loading;
@@ -20,12 +25,14 @@ export class TrackmapPage implements OnInit, OnDestroy  {
     selectedFriend: string;
     trackCase = false;
     friendCase = false;
+    panelDisplay = false;
     friendCount = 0;
     startpoint: any;
     endpoint = new google.maps.LatLng(13.138039, 80.31597);
     userDetails: any;
     enableDirection = false;
     scheduleInterval: any;
+    directionsDisplay: any;
 
     constructor(private navParams: NavParams,
         private loadingCtrl: LoadingController,
@@ -44,6 +51,7 @@ export class TrackmapPage implements OnInit, OnDestroy  {
 
     ngOnInit() {
         this.selectedFriend = '';
+        this.panelDisplay = false;
         this.trackCase = false;
         this.friendCase = false;
         this.userId = this.navParams.get('userId');
@@ -73,6 +81,7 @@ export class TrackmapPage implements OnInit, OnDestroy  {
     }
 
     GetMyFriendLocation() {
+    	this.panelDisplay = false;
         this.myStopFunction();
         this.enableDirection = false;
         this.trackCase = false;
@@ -115,7 +124,9 @@ export class TrackmapPage implements OnInit, OnDestroy  {
         });
         this.loading.present();
     }
-
+    closeModal(){
+    	 this.panelDisplay = false;
+    }
     //current location
     public initMap() {
         let mapOptions = {};
@@ -141,10 +152,16 @@ export class TrackmapPage implements OnInit, OnDestroy  {
             icon: 'assets/images/user_marker.png',
             animation: google.maps.Animation.DROP
         });
+
         google.maps.event.addListener(marker, 'click', () => {
             this.selectedFriend = name;
             this.endpoint = place;
             this.trackCase = true;
+            let content = '<h3>'+ name +'</h3>';
+	        let infoWindow = new google.maps.InfoWindow({
+	            content: content
+	        });
+	        infoWindow.open(this.map, marker);
         });
         this.markers.push(marker);
     }
@@ -154,24 +171,32 @@ export class TrackmapPage implements OnInit, OnDestroy  {
         this.myStopFunction();
         this.trackCase = false;
         this.enableDirection = true;
+        // this.panelDisplay = true;
         this.setMapOnAll(null);
         this.startpoint = new google.maps.LatLng(this.locationTracker.lat, this.locationTracker.lan);
         this.markers = [];
+        var rendererOptions = { 
+          map: this.map, 
+          icon: 'assets/images/user_marker.png',
+          clickable: false,
+          flat: true,
+          visible: true
+        } 
         let directionsService = new google.maps.DirectionsService;
-        let directionsDisplay = new google.maps.DirectionsRenderer;
+        this.directionsDisplay = new google.maps.DirectionsRenderer({markerOptions:rendererOptions});
 
-        directionsDisplay.setMap(this.map);
-        directionsDisplay.setPanel(this.directionsPanel.nativeElement);
-
+        this.directionsDisplay.setMap(this.map);
+    
         directionsService.route({
             origin: this.startpoint,
             destination: this.endpoint,
             optimizeWaypoints: true,
-            travelMode: 'DRIVING'
+            travelMode: 'WALKING'
         }, (res, status) => {
 
             if (status == google.maps.DirectionsStatus.OK) {
-                directionsDisplay.setDirections(res);
+
+                this.directionsDisplay.setDirections(res);
             }
 
         });
@@ -179,6 +204,15 @@ export class TrackmapPage implements OnInit, OnDestroy  {
         this.scheduleInterval = setInterval(() => {
             this.calculateAndDisplayRoute();
         }, 20000);
+    }
+
+    public showDirectionPanel() { 
+          this.panelDisplay = true;
+         setTimeout(() => { 
+            if(this.directionsDisplay && this.directionsPanel.nativeElement){
+                this.directionsDisplay.setPanel(this.directionsPanel.nativeElement);
+            }
+        },100);
     }
 
 }

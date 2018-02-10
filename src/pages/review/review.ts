@@ -22,9 +22,15 @@ export class ReviewPage {
   closeModal() {
     this.viewCtrl.dismiss();
   }
+  onModelChange(e) {
 
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReviewPage');
+  }
+
+  saveReview(){
+    this.viewCtrl.dismiss();
   }
 
 }

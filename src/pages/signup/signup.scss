@@ -1,12 +1,15 @@
 page-signup {
     .scroll-content {
-        background-color: #ffbf00;
+        background-color: white;
         display: flex;
         flex-direction: column;
         overflow: hidden;
       }
       .itemStyle{
-          background-color: #ffbf00;
-          color: white;
+          // background-color: #ffbf00;
+          // color: white;
+      }
+      .toolbar-title-md{
+        font-weight: 600;
       }
 }

@@ -1,25 +1,29 @@
 
 <ion-content fullscreen>
    <div  padding id="cloud-layer">
+                   
+ <ion-icon style="font-size: 30px;float: right;" ios="ios-log-out" md="md-log-out"(click)="signout()"></ion-icon>
 
    </div>
    <div style="height:55%">
-   <div style="text-align: center;">
-    Welcome to
-    <h1 style="font-weight: bold;">GO IHRAM</h1>
+   <div style="text-align: center;padding-top: 8px;font-size: 15px;">
+    WELCOME TO
+    
    </div>
+   <h2 style="font-weight: bold;text-align: center;position: relative;font-size: 30px;bottom:3%;">GO IHRAM</h2>
+
   <ion-list inset no-lines>
-    <button ion-item  style="background-color: #ffbf00; margin:2px;text-align: center;" 
+    <button ion-item  style="background-color: #ffbf00; margin:2px;text-align: center;right:4px;font-weight: normal;" 
     (click)="MoveToTrackPage()">
-      <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon> Track </button> 
-    <button ion-item  style="background-color: #ffbf00; margin:2px;text-align: center;" 
+      <ion-icon style="margin-right: 10px;" ios="ios-globe-outline" md="md-globe"></ion-icon> TRACK </button> 
+    <button ion-item  style="background-color: #ffbf00; margin:2px;text-align: center;font-weight: normal;" 
     (click)="MoveToFriendsPage()">
-      <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon> Friends </button> 
+      <ion-icon style="margin-right: 10px;margin-left: 10px;" ios="ios-contacts" md="md-contacts"></ion-icon> FRIENDS </button> 
    
-    <button ion-item  (click)="openModal()" style="background-color: #ffbf00;margin:2px;text-align: center;" >
-      <ion-icon ios="ios-create" md="md-create"> </ion-icon> Review </button> 
-    <button ion-item (click)="signout()" style="background-color: #ffbf00;margin:2px;text-align: center;">
-      <ion-icon ios="ios-lock" md="md-lock">  </ion-icon> SignOut </button> 
+    <!-- <button ion-item  (click)="openModal()" style="background-color: #ffbf00;margin:2px;text-align: center;" >
+      <ion-icon ios="ios-create" md="md-create"> </ion-icon> REVIEW </button>  -->
+   <!--  <button ion-item (click)="signout()" style="background-color: #ffbf00;margin:2px;text-align: center;">
+      <ion-icon style="margin-left:8px;" ios="ios-lock" md="md-lock">  </ion-icon> LOGOUT </button>  -->
   </ion-list>
 
   <ion-item style="bottom:0;background-color: #ffbf00;">

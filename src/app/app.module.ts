@@ -13,6 +13,9 @@ import { Diagnostic } from '@ionic-native/diagnostic';
 import { IonicStorageModule } from '@ionic/storage';
 import { enableProdMode } from '@angular/core';
 import { GoogleMaps } from '@ionic-native/google-maps';
+import { Ionic2RatingModule } from 'ionic2-rating';
+
+
 
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { MyApp } from './app.component';
@@ -55,7 +58,8 @@ import { ReviewPage } from '../pages/review/review';
     AngularFireModule.initializeApp(config),
     IonicStorageModule.forRoot(),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    Ionic2RatingModule
   ],
 
   bootstrap: [IonicApp],

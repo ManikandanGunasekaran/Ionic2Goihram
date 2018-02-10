@@ -36,7 +36,8 @@ export class HomePage implements OnDestroy  {
     }
 
     openModal() {
-        let myModal = this.modalCtrl.create(ReviewPage);
+       
+        let myModal = this.modalCtrl.create(ReviewPage,"",{enableBackdropDismiss:false});
         myModal.present();
     }
 
@@ -82,7 +83,7 @@ export class HomePage implements OnDestroy  {
         this.subscription = this.locationTracker.getUserDetails(this.userId).subscribe(data => {
             this.locationTracker.setUserDetail(data.data);
             this.loading.dismiss().then(() => {
-                // this.locationTracker.checkLocation();
+                this.locationTracker.checkLocation();
             });
         }, onerror => {
             this.loading.dismiss();
